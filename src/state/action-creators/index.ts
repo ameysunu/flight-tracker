@@ -11,26 +11,30 @@ export const getAirport= (term: string) => {
         });
 
         try{
-            const {data} = await axios.get('http://api.aviationstack.com/v1/flights?access_key=c3c26bcfa2fedb90e0a22738397d556b', {
-                params: {
-                    text: term
+            const {data} = await axios.get(`http://airlabs.co/api/v6/airports?api_key=e7ef6eb3-f981-41ab-81db-bbd90e3d5f7e`, {
+                params:{
+                    code:term,
                 }
+              
             });
 
-            const names = data.objects.map((result: any) => {
-                return result.package.name;
+            const names = data.response.map((result: any) => {
+                return result.name + " " + result.code;
             });
 
             dispatch ({
                 type: ActionType.SEARCH_FLIGHTS_SUCCESS,
-                payload: names
+                payload: names, 
             })
+            console.log(data);
         }
         catch(err){
             dispatch({
                 type: ActionType.SEARCH_FLIGHTS_ERROR,
                 payload: err.message
             })
+
+            console.log(err);
         }
     }
 };
