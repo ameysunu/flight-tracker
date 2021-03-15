@@ -11,15 +11,15 @@ export const getAirport= (term: string) => {
         });
 
         try{
-            const {data} = await axios.get(`http://airlabs.co/api/v6/airports?api_key=e7ef6eb3-f981-41ab-81db-bbd90e3d5f7e`, {
+            const {data} = await axios.get(`http://airlabs.co/api/v7/airlines?api_key=e7ef6eb3-f981-41ab-81db-bbd90e3d5f7e`, {
                 params:{
-                    code:term,
+                    iata_code:term,
                 }
               
             });
 
             const names = data.response.map((result: any) => {
-                return result.name + " " + result.code;
+                return result.name + " " + result.iata_code;
             });
 
             dispatch ({

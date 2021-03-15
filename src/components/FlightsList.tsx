@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import {useTypedSelector} from '../hooks/useTypedSelector';
 import {useActions} from '../hooks/useActions';
+import 'bootstrap/dist/css/bootstrap.css';
+import {Form, Button} from 'react-bootstrap';
 
 const FlightsList: React.FC = () => {
 
@@ -16,12 +18,14 @@ const FlightsList: React.FC = () => {
 
     return(
         <div>
-            <form onSubmit= {onSubmit}>
+            <Form onSubmit= {onSubmit}>
                 <input value={term} onChange= {e => setTerm(e.target.value)} />
-                <button>Search</button>
-                </form>
+                <br /><br />
+                <Button type = "submit">Search</Button>
+                </Form>
+                <br /><br />
              {error && <h3>{error}</h3>}
-             {loading && <h3> Loading... </h3>}
+             {loading && <div>Loading... </div>}
              {!error && !loading && data.map((name: any)=> <div key = {name}>{name}</div>)}    
         </div>
     );
