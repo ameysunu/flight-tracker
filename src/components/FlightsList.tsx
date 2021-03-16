@@ -34,14 +34,8 @@ const FlightsList: React.FC = () => {
             </Spinner>     
             </div>}
             {!error && !loading && data.map((name: any)=> <div key = {name} style ={{padding: "10px", alignItems: "center"}}>
-            <Card style = {{width: "18rem"}}>
-                <Card.Body>
-                <Card.Title>{name}</Card.Title>
-                    <Card.Text>
-                This is a wider card with supporting text below as a natural lead-in to
-                additional content. This content is a little bit longer.
-                    </Card.Text>
-                </Card.Body>
+            <Card>
+                <Card.Body>{name}</Card.Body>
             </Card>
              </div>)}    
         </div>
