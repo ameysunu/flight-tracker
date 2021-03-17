@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useTypedSelector} from '../hooks/useTypedSelector';
 import {useActions} from '../hooks/useActions';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Form, Button, Navbar, Card, Spinner} from 'react-bootstrap';
+import {Form, Button, Navbar, Card, Spinner, Alert, Nav, Col} from 'react-bootstrap';
 
 const FlightsList: React.FC = () => {
 
@@ -20,13 +20,26 @@ const FlightsList: React.FC = () => {
         <div>
             <Navbar bg="dark" variant="dark">
             <Navbar.Brand href="#home">Flight Tracker</Navbar.Brand>
-            <Form inline className="mr-sm-2" onSubmit= {onSubmit}>
-            <Form.Control value ={term} onChange= {e => setTerm(e.target.value)} type="text" placeholder="Search" className="mr-sm-2" />
-                <Button variant="outline-info" type = "submit">Search</Button>
-                </Form>
+            <Nav className="mr-auto">
+            <Nav.Link>Airports</Nav.Link>
+            </Nav>
                 </Navbar>
                 <br /><br />
-             {error && <h3>{error}</h3>}
+            <Form onSubmit= {onSubmit} style = {{position: "fixed", left: "20%", right: "20%"}}>
+                <Form.Row> 
+                    <Col><Form.Control value ={term} onChange= {e => setTerm(e.target.value)} type="text" placeholder="Search for an airline" className="mr-sm-2" /></Col>
+                    <Col><Button variant="outline-info" type = "submit">Search</Button></Col>
+                </Form.Row>
+                </Form>
+                <br /><br />
+             {error && 
+             <div style = {{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}> 
+            <Alert variant="danger">
+                <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
+                <p>{error}</p>
+            </Alert>
+             </div>}
+             
              {loading && 
             <div style = {{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
             <Spinner style ={{alignSelf:'center'}} animation="border" role="status" variant="primary" >
