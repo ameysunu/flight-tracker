@@ -17,9 +17,12 @@ export const getAirport= (term: string) => {
                 }
               
             });
-
+            
             const names = data.response.map((result: any) => {
-                return result.name;
+                if(result.iata_code === null){
+                    return result.name;
+                }else
+                return result.name + ", IATA: "+ result.iata_code;
             });
 
             dispatch ({

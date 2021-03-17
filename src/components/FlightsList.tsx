@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useTypedSelector} from '../hooks/useTypedSelector';
 import {useActions} from '../hooks/useActions';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Form, Button, Navbar, Card, Spinner, Alert, Nav, Col} from 'react-bootstrap';
+import {Form, Button, Navbar, Card, Spinner, Alert, Nav} from 'react-bootstrap';
 
 const FlightsList: React.FC = () => {
 
@@ -18,19 +18,20 @@ const FlightsList: React.FC = () => {
 
     return(
         <div>
-            <Navbar bg="dark" variant="dark">
+           <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
             <Navbar.Brand href="#home">Flight Tracker</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-            <Nav.Link>Airports</Nav.Link>
+            <Nav.Link> Airports </Nav.Link>
+            <Nav.Link> Routes </Nav.Link>
             </Nav>
-                </Navbar>
-                <br /><br />
-            <Form onSubmit= {onSubmit} style = {{position: "fixed", left: "20%", right: "20%"}}>
-                <Form.Row> 
-                    <Col><Form.Control value ={term} onChange= {e => setTerm(e.target.value)} type="text" placeholder="Search for an airline" className="mr-sm-2" /></Col>
-                    <Col><Button variant="outline-info" type = "submit">Search</Button></Col>
-                </Form.Row>
+            <Form inline className="mr-sm-2" onSubmit= {onSubmit}>
+            <Form.Control value ={term} onChange= {e => setTerm(e.target.value)} type="text" placeholder="Search for an airline" className="mr-sm-2" />
+                <Button variant="outline-light" type = "submit">Search</Button>
                 </Form>
+                </Navbar.Collapse>
+                </Navbar>
                 <br /><br />
              {error && 
              <div style = {{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}> 
