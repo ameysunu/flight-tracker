@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useTypedSelector} from '../hooks/useTypedSelector';
 import {useActions} from '../hooks/useActions';
 import 'bootstrap/dist/css/bootstrap.css';
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {Form, Button, Navbar, Card, Spinner, Alert, Nav} from 'react-bootstrap';
 
 const FlightsList: React.FC = () => {
@@ -49,11 +49,17 @@ const FlightsList: React.FC = () => {
             </Spinner>     
             </div>}
             {!error && !loading && data.map((name: any)=> <div key = {name} style ={{padding: "10px", alignItems: "center", cursor: "pointer"}}>
-            <NavLink to="/details">
+            <Link to={
+                {
+                    pathname: '/details',
+                    state: name,
+                }
+            } 
+            style={{ textDecoration: 'none', color: 'black' }}>
             <Card>
                 <Card.Body>{name}</Card.Body>
             </Card>
-            </NavLink>
+            </Link>
              </div>)}    
         </div>
     );
