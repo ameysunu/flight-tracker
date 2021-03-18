@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {useTypedSelector} from '../hooks/useTypedSelector';
 import {useActions} from '../hooks/useActions';
 import 'bootstrap/dist/css/bootstrap.css';
+import {NavLink} from 'react-router-dom';
 import {Form, Button, Navbar, Card, Spinner, Alert, Nav} from 'react-bootstrap';
 
 const FlightsList: React.FC = () => {
@@ -47,10 +48,12 @@ const FlightsList: React.FC = () => {
             <span className="sr-only">Loading...</span>
             </Spinner>     
             </div>}
-            {!error && !loading && data.map((name: any)=> <div key = {name} style ={{padding: "10px", alignItems: "center"}}>
+            {!error && !loading && data.map((name: any)=> <div key = {name} style ={{padding: "10px", alignItems: "center", cursor: "pointer"}}>
+            <NavLink to="/details">
             <Card>
                 <Card.Body>{name}</Card.Body>
             </Card>
+            </NavLink>
              </div>)}    
         </div>
     );
