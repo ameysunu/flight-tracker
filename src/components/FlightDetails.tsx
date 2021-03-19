@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Nav, Navbar, Row, Col } from 'react-bootstrap';
+import { Nav, Navbar, Row, Col, Card } from 'react-bootstrap';
 import {useHistory, useLocation} from 'react-router-dom';
 
 
@@ -13,29 +13,46 @@ const FlightDetails: React.FC = () => {
     const history = useHistory();
 
     const handleClick = () =>{
-        flightComponents();
         history.push('/')
     }
 
+    const [city, setCity] = useState('');
+    const [iata, setIATA] = useState('');
+    const [fleet, setFleet] = useState('');
+    const [callSign, setCallSign] = useState('');
+
     const flightComponents = async() => {
-        const {data} = await axios.get(`http://api.aviationstack.com/v1/airlines?access_key=3df13bb497027140f6265e1ca76d20ba`, {
+        const {data} = await axios.get(`http://api.aviationstack.com/v1/airlines?access_key=bcf3ccc2dbe7d4bb39f475a6042ded9a`, {
             params:{
                 airline_name:location.state
             }
           
         });
         
-        const names = data.data.map((result: any) => {
-            return result.airline_name;
+        const iata = data.data.map((result: any) => {
+            return result.iata_code;
         });
 
-        const city = data.data.map((result: any) => {
+       const city = data.data.map((result: any) => {
             return result.country_name;
         });
 
+        const fleet = data.data.map((result: any) => {
+            return result.fleet_size;
+        });
 
-        console.log(names + city);
+        const callsign = data.data.map((result: any) => {
+            return result.callsign;
+        })
+
+        setCity(city);
+        setIATA(iata);
+        setFleet(fleet);
+        setCallSign(callsign);
+
         }
+     
+        flightComponents();  
 
     return <div> 
         <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
@@ -52,11 +69,24 @@ const FlightDetails: React.FC = () => {
                 <br /><br />
                 <div style ={{paddingLeft: "10%"}}>
                 <Row>
-                <Col>{location.state}</Col>
+                {/* <Col>{location.state}</Col> */}
+                <Col>
+                <Card>
+  <Card.Header> Airline Details</Card.Header>
+  <Card.Body>
+    <Card.Title>{location.state}</Card.Title>
+    <Card.Text>
+      Country: {city} <br />
+      IATA: {iata} <br />
+      Call Sign : {callSign} <br />
+      Fleet: {fleet}
+    </Card.Text>
+  </Card.Body>
+</Card>
+                </Col>
                 <Col>2 of 2</Col>
                 </Row>
                 </div>
-        {/* <h1>{location.state}</h1> */}
     </div>
 }
 
