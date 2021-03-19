@@ -1,6 +1,8 @@
 import React from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
+import axios from 'axios';
+import { Nav, Navbar, Row, Col } from 'react-bootstrap';
 import {useHistory, useLocation} from 'react-router-dom';
+
 
 const FlightDetails: React.FC = () => {
     
@@ -11,9 +13,29 @@ const FlightDetails: React.FC = () => {
     const history = useHistory();
 
     const handleClick = () =>{
+        flightComponents();
         history.push('/')
     }
 
+    const flightComponents = async() => {
+        const {data} = await axios.get(`http://api.aviationstack.com/v1/airlines?access_key=3df13bb497027140f6265e1ca76d20ba`, {
+            params:{
+                airline_name:location.state
+            }
+          
+        });
+        
+        const names = data.data.map((result: any) => {
+            return result.airline_name;
+        });
+
+        const city = data.data.map((result: any) => {
+            return result.country_name;
+        });
+
+
+        console.log(names + city);
+        }
 
     return <div> 
         <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
@@ -28,7 +50,13 @@ const FlightDetails: React.FC = () => {
                 </Navbar.Collapse>
                 </Navbar>
                 <br /><br />
-        <h1>{location.state}</h1>
+                <div style ={{paddingLeft: "10%"}}>
+                <Row>
+                <Col>{location.state}</Col>
+                <Col>2 of 2</Col>
+                </Row>
+                </div>
+        {/* <h1>{location.state}</h1> */}
     </div>
 }
 
