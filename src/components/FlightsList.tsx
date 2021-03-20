@@ -10,7 +10,7 @@ const FlightsList: React.FC = () => {
     const [term, setTerm] = useState('');
     const {getAirport} = useActions();
     const {data, error, loading} = useTypedSelector((state:any)=> state.repositories);
-
+    const {getAirline} = useActions();
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -49,10 +49,10 @@ const FlightsList: React.FC = () => {
             </Spinner>     
             </div>}
             {!error && !loading && data.map((name: any)=> <div key = {name} style ={{padding: "10px", alignItems: "center", cursor: "pointer"}}>
-            <Link to={
+            <Link onClick = {()=> getAirline(name)} to={
                 {
                     pathname: '/details',
-                    state: name,
+                    state: name
                 }
             } 
             style={{ textDecoration: 'none', color: 'black' }}>

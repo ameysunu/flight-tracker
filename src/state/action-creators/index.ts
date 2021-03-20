@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {Dispatch} from 'redux';
-import {ActionType} from '../action-types';
-import {Action} from '../actions';
+import {ActionType, AirlineActionType} from '../action-types';
+import {Action, AirlineAction} from '../actions';
 
 export const getAirport= (term: string) => {
 
@@ -34,6 +34,59 @@ export const getAirport= (term: string) => {
         catch(err){
             dispatch({
                 type: ActionType.SEARCH_FLIGHTS_ERROR,
+                payload: err.message
+            })
+
+            console.log(err);
+        }
+    }
+};
+
+export const getAirline= (airline_name: string) => {
+
+    return async(dispatch:Dispatch<AirlineAction>) => {
+        dispatch ({
+            type: AirlineActionType.SEARCH_AIRLINE
+        });
+
+        try{
+            const {data} = await axios.get(`http://api.aviationstack.com/v1/airlines?access_key=be060a85548396ee928032ca22cf7a77`, {
+                params:{
+                    airline_name:airline_name,
+                }
+              
+            });
+            
+            const iata = data.data.map((result: any) => {
+                return result.iata_code;
+            });
+    
+           const city = data.data.map((result: any) => {
+                return result.country_name;
+            });
+    
+            const fleet = data.data.map((result: any) => {
+                return result.fleet_size;
+            });
+    
+            const callsign = data.data.map((result: any) => {
+                return result.callsign;
+            });
+
+            dispatch ({
+                type: AirlineActionType.SEARCH_AIRLINE_SUCCESS,
+                payload: {
+                    iata: iata,
+                    city: city,
+                    fleet: fleet,
+                    callsign: callsign
+                }, 
+            })
+            console.log(data);
+        }
+        catch(err){
+            dispatch({
+                type: AirlineActionType.SEARCH_AIRLINE_ERROR,
                 payload: err.message
             })
 
