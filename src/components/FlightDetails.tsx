@@ -18,8 +18,11 @@ const FlightDetails: React.FC = () => {
     history.push("/");
   };
 
+  
+
   useEffect(() => {
-    dispatch(getAirline("Air Astana"));
+    dispatch(getAirline(String(location.state)));
+    //eslint-disable-next-line
   }, [dispatch]);
 
   const { data } = selector.airlinerepo;
