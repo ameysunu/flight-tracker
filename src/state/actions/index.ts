@@ -21,6 +21,7 @@ interface SearchAirlineAction {
 interface SearchAirlineSuccessAction {
   type: AirlineActionType.SEARCH_AIRLINE_SUCCESS;
   payload: {
+    flightname: string;
     iata: string;
     city: string;
     fleet: string;

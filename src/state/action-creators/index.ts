@@ -55,6 +55,10 @@ export const getAirline = (airline_name: string) => {
         }
       );
 
+      const flightname =  data.data.map((result: any) => {
+        return result.airline_name;
+      });
+
       const iata = data.data.map((result: any) => {
         return result.iata_code;
       });
@@ -74,6 +78,7 @@ export const getAirline = (airline_name: string) => {
       dispatch({
         type: AirlineActionType.SEARCH_AIRLINE_SUCCESS,
         payload: {
+          flightname: flightname,
           iata: iata,
           city: city,
           fleet: fleet,

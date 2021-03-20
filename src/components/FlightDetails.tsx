@@ -31,6 +31,7 @@ const FlightDetails: React.FC = () => {
   const fleet = data?.fleet?.[0];
   const iata = data?.iata?.[0];
   const callSign = data?.callsign?.[0];
+  const flightname = data.flightname?.[0];
 
   return (
     <div>
@@ -54,7 +55,7 @@ const FlightDetails: React.FC = () => {
             <Card>
               <Card.Header> Airline Details</Card.Header>
               <Card.Body>
-                <Card.Title>{location.state}</Card.Title>
+                <Card.Title>{flightname}</Card.Title>
                 <Card.Text>
                   Country: {city} <br />
                   IATA: {iata} <br />
@@ -63,6 +64,9 @@ const FlightDetails: React.FC = () => {
                 </Card.Text>
               </Card.Body>
             </Card>
+          </Col>
+          <Col>
+          2 of 2
           </Col>
         </Row>
       </div>
