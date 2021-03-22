@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { Nav, Navbar, Row, Col, Card } from "react-bootstrap";
+import { Nav, Navbar, Row, Col, Card, Alert, Spinner } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAirline } from "../state/action-creators";
 import { RootState } from "../state";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
 const FlightDetails: React.FC = () => {
   let location = useLocation<{
@@ -13,12 +14,13 @@ const FlightDetails: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const selector = useSelector((state: RootState) => state);
+  const { error, loading } = useTypedSelector(
+    (state: any) => state.airlinerepo
+  );
 
   const handleClick = () => {
     history.push("/");
   };
-
-  
 
   useEffect(() => {
     dispatch(getAirline(String(location.state)));
@@ -30,6 +32,7 @@ const FlightDetails: React.FC = () => {
   const city = data?.city?.[0];
   const fleet = data?.fleet?.[0];
   const iata = data?.iata?.[0];
+  const icao = data?.icao?.[0];
   const callSign = data?.callsign?.[0];
   const flightname = data.flightname?.[0];
 
@@ -49,27 +52,62 @@ const FlightDetails: React.FC = () => {
       </Navbar>
       <br />
       <br />
-      <div style={{ paddingLeft: "10%" }}>
-        <Row>
-          <Col>
-            <Card>
-              <Card.Header> Airline Details</Card.Header>
-              <Card.Body>
-                <Card.Title>{flightname}</Card.Title>
-                <Card.Text>
-                  Country: {city} <br />
-                  IATA: {iata} <br />
-                  Call Sign : {callSign} <br />
-                  Fleet: {fleet}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-          2 of 2
-          </Col>
-        </Row>
-      </div>
+      {error && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Alert variant="danger">
+            <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
+            <p>{error}</p>
+          </Alert>
+        </div>
+      )}
+      {loading && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Spinner
+            style={{ alignSelf: "center" }}
+            animation="border"
+            role="status"
+            variant="primary"
+          >
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      )}
+      {!error && !loading && (
+        <div style={{ paddingLeft: "10%" }}>
+          <Row>
+            <Col>
+              <Card>
+                <Card.Header> Airline Details</Card.Header>
+                <Card.Body>
+                  <Card.Title>{flightname}</Card.Title>
+                  <Card.Text>
+                    Country: {city} <br />
+                    IATA: {iata} <br />
+                    ICAO: {icao} <br />
+                    Call Sign : {callSign} <br />
+                    Fleet: {fleet}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col>2 of 2</Col>
+          </Row>
+        </div>
+      )}
     </div>
   );
 };

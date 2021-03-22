@@ -71,13 +71,17 @@ export const getAirline = (airline_name: string) => {
         return result.fleet_size;
       });
 
+      const icao = data.data.map((result: any) =>{
+        return result.icao_code;
+      })
+
       const callsign = data.data.map((result: any) => {
         return result.callsign;
       });
-
       dispatch({
         type: AirlineActionType.SEARCH_AIRLINE_SUCCESS,
         payload: {
+          icao: icao,
           flightname: flightname,
           iata: iata,
           city: city,
