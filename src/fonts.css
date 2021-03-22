@@ -1,11 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Google+Sans:400,500);
 
 body {
-    font-family: 'Google Sans', sans-serif
-  }
-  .heading {
-    font-weight: 700;
-  }
-  .subheading {
-    font-weight: 300;
-  }
+  font-family: "Google Sans", sans-serif;
+  overflow-x: none;
+}
+.heading {
+  font-weight: 700;
+}
+.subheading {
+  font-weight: 300;
+}

@@ -1,5 +1,13 @@
 import React, { useEffect } from "react";
-import { Nav, Navbar, Row, Col, Card, Alert, Spinner } from "react-bootstrap";
+import {
+  Nav,
+  Navbar,
+  Col,
+  Card,
+  Alert,
+  Spinner,
+  Figure,
+} from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAirline } from "../state/action-creators";
@@ -35,6 +43,8 @@ const FlightDetails: React.FC = () => {
   const icao = data?.icao?.[0];
   const callSign = data?.callsign?.[0];
   const flightname = data.flightname?.[0];
+
+  const flightDeet = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${iata}`;
 
   return (
     <div>
@@ -87,25 +97,30 @@ const FlightDetails: React.FC = () => {
         </div>
       )}
       {!error && !loading && (
-        <div style={{ paddingLeft: "10%" }}>
-          <Row>
-            <Col>
-              <Card>
-                <Card.Header> Airline Details</Card.Header>
-                <Card.Body>
-                  <Card.Title>{flightname}</Card.Title>
-                  <Card.Text>
-                    Country: {city} <br />
-                    IATA: {iata} <br />
-                    ICAO: {icao} <br />
-                    Call Sign : {callSign} <br />
-                    Fleet: {fleet}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col>2 of 2</Col>
-          </Row>
+        <div style={{ paddingLeft: "10%", paddingRight: "10%" }}>
+          <Col>
+            <Card>
+              <Card.Header> Airline Details</Card.Header>
+              <Card.Body>
+                <Figure>
+                  <Figure.Image
+                    width={171}
+                    height={180}
+                    alt={flightname}
+                    src={flightDeet}
+                  />
+                </Figure>
+                <Card.Title>{flightname}</Card.Title>
+                <Card.Text>
+                  Country: {city} <br />
+                  IATA: {iata} <br />
+                  ICAO: {icao} <br />
+                  Call Sign : {callSign} <br />
+                  Fleet: {fleet}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
         </div>
       )}
     </div>
