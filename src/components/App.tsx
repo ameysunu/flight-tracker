@@ -5,6 +5,7 @@ import "../fonts.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import FlightDetails from "./FlightDetails";
 import NotFound from "./NotFound";
+import Airports from "./Airports";
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/" component={FlightsList} />
           <Route exact path="/details" component={FlightDetails} />
+          <Route exact path="/airports" component={Airports} />
           <Route component={NotFound} />
         </Switch>
       </Provider>
