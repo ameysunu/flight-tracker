@@ -33,7 +33,9 @@ const FlightsList: React.FC = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-          <Link to="/airports" className="nav-link">Airports</Link>
+            <Link to="/airports" className="nav-link">
+              Airports
+            </Link>
             <Nav.Link> Routes </Nav.Link>
           </Nav>
           <Form inline className="mr-sm-2" onSubmit={onSubmit}>

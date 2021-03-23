@@ -8,7 +8,7 @@ import {
   Spinner,
   Figure,
 } from "react-bootstrap";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAirline } from "../state/action-creators";
 import { RootState } from "../state";
@@ -55,7 +55,9 @@ const FlightDetails: React.FC = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link> Airports </Nav.Link>
+            <Link to="/airports" className="nav-link">
+              Airports
+            </Link>
             <Nav.Link> Routes </Nav.Link>
           </Nav>
         </Navbar.Collapse>
