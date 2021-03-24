@@ -111,41 +111,43 @@ export const getAirportDetails = (airport_name: string) => {
     });
 
     try {
-      const { data } = await axios.get(`http://airlabs.co/api/v7/airlines`, {
-        params: {
-          api_key: process.env.REACT_APP_AVLABS_AIRPORT_KEY,
-          airport_name: airport_name,
-        },
-      });
+      const { data } = await axios.get(
+        `http://api.aviationstack.com/v1/airports?access_key=7b7a5951cbd854a0285cc0c27b3c1a49`,
+        {
+          params: {
+            airport_name: airport_name,
+          },
+        }
+      );
 
-      const iata = data.response.map((result: any) => {
+      const iata = data.data.map((result: any) => {
         return result.iata_code;
       });
 
-      const gmt = data.response.map((result: any) => {
+      const gmt = data.data.map((result: any) => {
         return result.gmt;
       });
 
-      const icao = data.response.map((result: any) => {
+      const icao = data.data.map((result: any) => {
         return result.icao_code;
       });
 
-      const countrycode = data.response.map((result: any) => {
+      const countrycode = data.data.map((result: any) => {
         return result.country_iso2;
       });
 
-      const country = data.response.map((result: any) => {
+      const country = data.data.map((result: any) => {
         return result.country_name;
       });
 
-      const airport = data.response.map((result: any) => {
+      const airport = data.data.map((result: any) => {
         return result.airport_name;
       });
 
-      const coordinates = data.response.map((result: any) => {
+      const coordinates = data.data.map((result: any) => {
         return result.latitude + result.longitude;
       });
-      const timezone = data.response.map((result: any) => {
+      const timezone = data.data.map((result: any) => {
         return result.timezone;
       });
 

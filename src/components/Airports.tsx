@@ -1,10 +1,28 @@
-import { Navbar, Nav, Form, Row, Col, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Navbar, Nav, Form, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useActions } from "../hooks/useActions";
+import { useTypedSelector } from "../hooks/useTypedSelector";
+import { RootState } from "../state";
 
 const Airports: React.FC = () => {
   const history = useHistory();
   const handleClick = () => {
     history.push("/");
+  };
+  const [airport_name, setAirport_name] = useState("");
+  const selector = useSelector((state: RootState) => state);
+  const { data } = selector.airportrepo;
+  const { error, loading } = useTypedSelector(
+    (state: any) => state.airportrepo
+  );
+  const { getAirportDetails } = useActions();
+  const iata = data?.iata?.[0];
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    getAirportDetails(airport_name);
   };
 
   return (
@@ -23,14 +41,54 @@ const Airports: React.FC = () => {
       <br /> <br />
       <Row style={{ paddingLeft: "15%", paddingRight: "15%" }}>
         <Col>
-          <Form.Group>
-            <Form.Control type="text" placeholder="Search for an airport" />
-          </Form.Group>
-        </Col>
-        <Col md="auto">
-          <Button> Search</Button>
+          <Form onSubmit={onSubmit}>
+            <Form.Control
+              type="text"
+              value={airport_name}
+              onChange={(e) => setAirport_name(e.target.value)}
+              placeholder="Search for an airport"
+            />
+            <Col md="auto"></Col>
+          </Form>
         </Col>
       </Row>
+      <br />
+      <br />
+      {error && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Alert variant="danger">
+            <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
+            <p>{error}</p>
+          </Alert>
+        </div>
+      )}
+      {loading && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Spinner
+            style={{ alignSelf: "center" }}
+            animation="border"
+            role="status"
+            variant="primary"
+          >
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      )}
+      {!loading && !error && <h1> {iata} </h1>}
     </div>
   );
 };
