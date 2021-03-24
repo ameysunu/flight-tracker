@@ -9,3 +9,9 @@ export enum AirlineActionType {
   SEARCH_AIRLINE_SUCCESS = "search_airline_success",
   SEARCH_AIRLINE_ERROR = "search_airline_error",
 }
+
+export enum AirportActionType {
+  SEARCH_AIRPORT = "search_airport",
+  SEARCH_AIRPORT_SUCCESS = "search_airport_success",
+  SEARCH_AIRPORT_ERROR = "search_airport_erro",
+}

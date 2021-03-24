@@ -1,4 +1,8 @@
-import { ActionType, AirlineActionType } from "../action-types";
+import {
+  ActionType,
+  AirlineActionType,
+  AirportActionType,
+} from "../action-types";
 
 interface SearchFlightsAction {
   type: ActionType.SEARCH_FLIGHTS;
@@ -35,6 +39,29 @@ interface SearchAirlineErrorAction {
   payload: string;
 }
 
+interface SearchAirportAction {
+  type: AirportActionType.SEARCH_AIRPORT;
+}
+
+interface SearchAirportSuccessAction {
+  type: AirportActionType.SEARCH_AIRPORT_SUCCESS;
+  payload: {
+    icao: string;
+    gmt: string;
+    countrycode: string;
+    iata: string;
+    country: string;
+    airportname: string;
+    coordinate: string;
+    timezone: string;
+  };
+}
+
+interface SearchAirportErrorAction {
+  type: AirportActionType.SEARCH_AIRPORT_ERROR;
+  payload: string;
+}
+
 export type Action =
   | SearchFlightsAction
   | SearchFlightsSuccessAction
@@ -44,3 +71,8 @@ export type AirlineAction =
   | SearchAirlineAction
   | SearchAirlineSuccessAction
   | SearchAirlineErrorAction;
+
+export type AirportAction =
+  | SearchAirportAction
+  | SearchAirportSuccessAction
+  | SearchAirportErrorAction;
