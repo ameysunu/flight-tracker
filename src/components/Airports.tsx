@@ -18,7 +18,8 @@ const Airports: React.FC = () => {
     (state: any) => state.airportrepo
   );
   const { getAirportDetails } = useActions();
-  const iata = data?.iata?.[0];
+  const name = data?.name?.[0];
+  const code = data?.code?.[0];
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -88,7 +89,12 @@ const Airports: React.FC = () => {
           </Spinner>
         </div>
       )}
-      {!loading && !error && <h1> {iata} </h1>}
+      {!loading && !error && (
+        <div>
+          {" "}
+          {name} {code}{" "}
+        </div>
+      )}
     </div>
   );
 };

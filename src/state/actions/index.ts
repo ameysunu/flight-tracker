@@ -46,14 +46,8 @@ interface SearchAirportAction {
 interface SearchAirportSuccessAction {
   type: AirportActionType.SEARCH_AIRPORT_SUCCESS;
   payload: {
-    icao: string;
-    gmt: string;
-    countrycode: string;
-    iata: string;
-    country: string;
-    airportname: string;
-    coordinate: string;
-    timezone: string;
+    name: string;
+    code: string;
   };
 }
 

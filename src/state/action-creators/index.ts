@@ -112,56 +112,27 @@ export const getAirportDetails = (airport_name: string) => {
 
     try {
       const { data } = await axios.get(
-        `http://api.aviationstack.com/v1/airports?access_key=7b7a5951cbd854a0285cc0c27b3c1a49`,
+        `http://airlabs.co/api/v6/autocomplete?api_key=e7ef6eb3-f981-41ab-81db-bbd90e3d5f7e`,
         {
           params: {
-            airport_name: airport_name,
+            query: airport_name,
           },
         }
       );
 
-      const iata = data.data.map((result: any) => {
-        return result.iata_code;
+      const code = data.response.airports.map((result: any) => {
+        return result.code;
       });
 
-      const gmt = data.data.map((result: any) => {
-        return result.gmt;
-      });
-
-      const icao = data.data.map((result: any) => {
-        return result.icao_code;
-      });
-
-      const countrycode = data.data.map((result: any) => {
-        return result.country_iso2;
-      });
-
-      const country = data.data.map((result: any) => {
-        return result.country_name;
-      });
-
-      const airport = data.data.map((result: any) => {
-        return result.airport_name;
-      });
-
-      const coordinates = data.data.map((result: any) => {
-        return result.latitude + result.longitude;
-      });
-      const timezone = data.data.map((result: any) => {
-        return result.timezone;
+      const name = data.response.airports.map((result: any) => {
+        return result.name;
       });
 
       dispatch({
         type: AirportActionType.SEARCH_AIRPORT_SUCCESS,
         payload: {
-          icao: icao,
-          gmt: gmt,
-          countrycode: countrycode,
-          country: country,
-          airportname: airport,
-          coordinate: coordinates,
-          timezone: timezone,
-          iata: iata,
+          code: code,
+          name: name,
         },
       });
     } catch (err) {
