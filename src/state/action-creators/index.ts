@@ -112,7 +112,7 @@ export const getAirportDetails = (airport_name: string) => {
 
     try {
       const { data } = await axios.get(
-        `http://airlabs.co/api/v6/autocomplete?api_key=e7ef6eb3-f981-41ab-81db-bbd90e3d5f7e`,
+        `http://airlabs.co/api/v6/autocomplete?api_key=15c6d234-e87f-4224-a1e5-07d5161d4295`,
         {
           params: {
             query: airport_name,

@@ -47,12 +47,13 @@ const Airports: React.FC = () => {
               type="text"
               value={airport_name}
               onChange={(e) => setAirport_name(e.target.value)}
-              placeholder="Search for an airport"
+              placeholder="Search for a city or airport"
             />
             <Col md="auto"></Col>
           </Form>
         </Col>
       </Row>
+      
       <br />
       <br />
       {error && (
@@ -90,10 +91,11 @@ const Airports: React.FC = () => {
         </div>
       )}
       {!loading && !error && (
-        <div>
-          {" "}
-          {name} {code}{" "}
-        </div>
+        <Col style={{ paddingLeft: "15%", paddingRight: "15%" }}>
+          <h3>Results:</h3>
+          <br />
+          {name} {code}
+        </Col>
       )}
     </div>
   );
