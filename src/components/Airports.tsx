@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RootState } from "../state";
-import '../fonts.css';
+import "../fonts.css";
 
 const Airports: React.FC = () => {
   const [show, setShow] = useState(false);
@@ -56,19 +56,23 @@ const Airports: React.FC = () => {
         </Navbar.Collapse>
       </Navbar>
       <br /> <br />
-      <Row style={{ paddingLeft: "15%", paddingRight: "15%" }}>
-        <Col>
-          <Form onSubmit={onSubmit}>
-            <Form.Control
-              type="text"
-              value={airport_name}
-              onChange={(e) => setAirport_name(e.target.value)}
-              placeholder="Search for a city or airport"
-            />
-            <Col md="auto"></Col>
-          </Form>
-        </Col>
-      </Row>
+      <div style={{ paddingLeft: "15%", paddingRight: "15%" }}>
+        <h1> Airport List</h1>
+        <br />
+        <Row>
+          <Col>
+            <Form onSubmit={onSubmit}>
+              <Form.Control
+                type="text"
+                value={airport_name}
+                onChange={(e) => setAirport_name(e.target.value)}
+                placeholder="Search for a city or airport"
+              />
+              <Col md="auto"></Col>
+            </Form>
+          </Col>
+        </Row>
+      </div>
       <br />
       <br />
       {error && (
@@ -113,7 +117,7 @@ const Airports: React.FC = () => {
           >
             {name} {code}
           </div>
-          <Modal show={show} centered>
+          <Modal show={show} centered backdrop="static" size= "lg">
             <Modal.Header>
               <Modal.Title>{name} Airport</Modal.Title>
             </Modal.Header>
@@ -123,9 +127,6 @@ const Airports: React.FC = () => {
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 Close
-              </Button>
-              <Button variant="primary" onClick={handleClose}>
-                Save Changes
               </Button>
             </Modal.Footer>
           </Modal>
