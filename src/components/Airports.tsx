@@ -1,12 +1,28 @@
 import React, { useState } from "react";
-import { Navbar, Nav, Form, Row, Col, Spinner, Alert } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  Form,
+  Row,
+  Col,
+  Spinner,
+  Alert,
+  Button,
+  Modal,
+} from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RootState } from "../state";
+import '../fonts.css';
 
 const Airports: React.FC = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const history = useHistory();
   const handleClick = () => {
     history.push("/");
@@ -53,7 +69,6 @@ const Airports: React.FC = () => {
           </Form>
         </Col>
       </Row>
-      
       <br />
       <br />
       {error && (
@@ -92,9 +107,28 @@ const Airports: React.FC = () => {
       )}
       {!loading && !error && (
         <Col style={{ paddingLeft: "15%", paddingRight: "15%" }}>
-          <h3>Results:</h3>
-          <br />
-          {name} {code}
+          <div
+            style={{ cursor: "pointer", fontSize: "25px" }}
+            onClick={handleShow}
+          >
+            {name} {code}
+          </div>
+          <Modal show={show} centered>
+            <Modal.Header>
+              <Modal.Title>{name} Airport</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Woohoo, you're reading this text in a modal!
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleClose}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Col>
       )}
     </div>
