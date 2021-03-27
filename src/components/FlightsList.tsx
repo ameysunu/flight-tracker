@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { useActions } from "../hooks/useActions";
 import "bootstrap/dist/css/bootstrap.css";
@@ -11,15 +11,30 @@ import {
   Spinner,
   Alert,
   Nav,
+  Jumbotron,
 } from "react-bootstrap";
 
 const FlightsList: React.FC = () => {
   const [term, setTerm] = useState("");
+  const [greeting, setGreeting] = useState("");
   const { getAirport } = useActions();
   const { data, error, loading } = useTypedSelector(
     (state: any) => state.repositories
   );
   const { getAirline } = useActions();
+
+  useEffect(() => {
+    var d = new Date();
+    var hours = d.getHours();
+
+    if (hours < 12) {
+      setGreeting("Good Morning!");
+    } else if (hours < 18) {
+      setGreeting("Good Afternoon!");
+    } else {
+      setGreeting("Good Evening!");
+    }
+  }, []);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,6 +69,17 @@ const FlightsList: React.FC = () => {
       </Navbar>
       <br />
       <br />
+      <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+        <Jumbotron>
+          <h1>{greeting}</h1>
+          <p>
+            Begin by searching for an airline, airports or even live routes.
+          </p>
+          <p>
+            <Button variant="primary">Learn more</Button>
+          </p>
+        </Jumbotron>
+      </div>
       {error && (
         <div
           style={{
