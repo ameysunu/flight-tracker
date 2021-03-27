@@ -34,7 +34,9 @@ const Airports: React.FC = () => {
   const selector = useSelector((state: RootState) => state);
   const { data } = selector.airportrepo;
   const { value } = selector.airportdatarepo;
-  const {errorhandler, loader} = useTypedSelector((state: any) => state.airportdatarepo)
+  const { errorhandler, loader } = useTypedSelector(
+    (state: any) => state.airportdatarepo
+  );
   const { error, loading } = useTypedSelector(
     (state: any) => state.airportrepo
   );
@@ -129,61 +131,60 @@ const Airports: React.FC = () => {
             {name} {code}
           </div>
 
-          
           {loader && (
-        <div
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Spinner
-            style={{ alignSelf: "center" }}
-            animation="grow"
-            role="status"
-            variant="primary"
-          >
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        </div>
-      )}
-      {errorhandler && (
-        <div
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Alert variant="danger">
-            <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
-            <p>{errorhandler}</p>
-          </Alert>
-        </div>
-      )}
-      {!errorhandler && !loader && (
-        <Modal show={show} centered backdrop="static" size="lg">
-        <Modal.Header>
-        <Modal.Title>{name} Airport</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        GMT: {gmt} <br />
-        IATA: {iata_code} <br />
-        ICAO: {icao} <br />
-        Coordinates: {coordinates} <br />
-        Timezone: {timezone} <br />
-        Country: {country} <br />
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-      </Modal.Footer>
-          </Modal>
-      )}
+            <div
+              style={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Spinner
+                style={{ alignSelf: "center" }}
+                animation="grow"
+                role="status"
+                variant="primary"
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </div>
+          )}
+          {errorhandler && (
+            <div
+              style={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Alert variant="danger">
+                <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
+                <p>{errorhandler}</p>
+              </Alert>
+            </div>
+          )}
+          {!errorhandler && !loader && (
+            <Modal show={show} centered backdrop="static" size="lg">
+              <Modal.Header>
+                <Modal.Title>{name} Airport</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                GMT: {gmt} <br />
+                IATA: {iata_code} <br />
+                ICAO: {icao} <br />
+                Coordinates: {coordinates} <br />
+                Timezone: {timezone} <br />
+                Country: {country} <br />
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
         </Col>
       )}
     </div>
