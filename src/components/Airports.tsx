@@ -21,7 +21,10 @@ const Airports: React.FC = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    getAirportData(name);
+    setShow(true);
+  };
 
   const history = useHistory();
   const handleClick = () => {
@@ -30,12 +33,20 @@ const Airports: React.FC = () => {
   const [airport_name, setAirport_name] = useState("");
   const selector = useSelector((state: RootState) => state);
   const { data } = selector.airportrepo;
+  const { value } = selector.airportdatarepo;
+  const {errorhandler, loader} = useTypedSelector((state: any) => state.airportdatarepo)
   const { error, loading } = useTypedSelector(
     (state: any) => state.airportrepo
   );
-  const { getAirportDetails } = useActions();
+  const { getAirportDetails, getAirportData } = useActions();
   const name = data?.name?.[0];
   const code = data?.code?.[0];
+  const iata_code = value?.iata_code?.[0];
+  const gmt = value?.gmt?.[0];
+  const icao = value?.icao_code?.[0];
+  const coordinates = value?.coordinates?.[0];
+  const country = value?.country?.[0];
+  const timezone = value?.timezone?.[0];
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -117,19 +128,62 @@ const Airports: React.FC = () => {
           >
             {name} {code}
           </div>
-          <Modal show={show} centered backdrop="static" size= "lg">
-            <Modal.Header>
-              <Modal.Title>{name} Airport</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Woohoo, you're reading this text in a modal!
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-            </Modal.Footer>
+
+          
+          {loader && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Spinner
+            style={{ alignSelf: "center" }}
+            animation="border"
+            role="status"
+            variant="primary"
+          >
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      )}
+      {errorhandler && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Alert variant="danger">
+            <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
+            <p>{errorhandler}</p>
+          </Alert>
+        </div>
+      )}
+      {!errorhandler && !loader && (
+        <Modal show={show} centered backdrop="static" size="lg">
+        <Modal.Header>
+        <Modal.Title>{name} Airport</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        GMT: {gmt} <br />
+        IATA: {iata_code} <br />
+        ICAO: {icao} <br />
+        Coordinates: {coordinates} <br />
+        Timezone: {timezone} <br />
+        Country: {country} <br />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+      </Modal.Footer>
           </Modal>
+      )}
         </Col>
       )}
     </div>

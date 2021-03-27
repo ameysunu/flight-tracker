@@ -2,15 +2,15 @@ import { GetAirportAction } from "../actions";
 import { GetAirportData } from "../action-types";
 
 interface GetAirportState {
-  loading: boolean;
-  error: string | null;
-  data: any;
+  loader: boolean;
+  errorhandler: string | null;
+  value: any;
 }
 
 const initialState = {
-  loading: false,
-  error: null,
-  data: [],
+  loader: false,
+  errorhandler: null,
+  value: [],
 };
 
 const airportdatareducer = (
@@ -19,13 +19,13 @@ const airportdatareducer = (
 ): GetAirportState => {
   switch (action.type) {
     case GetAirportData.GET_AIRPORT:
-      return { loading: true, error: null, data: [] };
+      return { loader: true, errorhandler: null, value: [] };
 
     case GetAirportData.GET_AIRPORT_SUCCESS:
-      return { loading: false, error: null, data: action.payload };
+      return { loader: false, errorhandler: null, value: action.payload };
 
     case GetAirportData.GET_AIRPORT_ERROR:
-      return { loading: false, error: action.payload, data: [] };
+      return { loader: false, errorhandler: action.payload, value: [] };
     default:
       return state;
   }

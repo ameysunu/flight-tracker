@@ -181,7 +181,7 @@ export const getAirportData = (airport_name: string) => {
       });
 
       const coordinates = data.data.map((result: any) => {
-        return result.latitude + result.longitude;
+        return result.latitude + "," +result.longitude;
       });
 
       const country = data.data.map((result: any) => {
