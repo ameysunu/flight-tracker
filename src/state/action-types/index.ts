@@ -15,3 +15,9 @@ export enum AirportActionType {
   SEARCH_AIRPORT_SUCCESS = "search_airport_success",
   SEARCH_AIRPORT_ERROR = "search_airport_erro",
 }
+
+export enum GetAirportData {
+  GET_AIRPORT = "get_airport",
+  GET_AIRPORT_SUCCESS = "get_airport_success",
+  GET_AIRPORT_ERROR = "get_airport_error",
+}

@@ -2,6 +2,7 @@ import {
   ActionType,
   AirlineActionType,
   AirportActionType,
+  GetAirportData,
 } from "../action-types";
 
 interface SearchFlightsAction {
@@ -56,6 +57,27 @@ interface SearchAirportErrorAction {
   payload: string;
 }
 
+interface GetAirportDataAction {
+  type: GetAirportData.GET_AIRPORT;
+}
+
+interface GetAirportSuccessData {
+  type: GetAirportData.GET_AIRPORT_SUCCESS;
+  payload: {
+    gmt: string;
+    iata_code: string;
+    icao_code: string;
+    coordinates: string;
+    country: string;
+    timezone: string;
+  };
+}
+
+interface GetAirportErrorData {
+  type: GetAirportData.GET_AIRPORT_ERROR;
+  payload: string;
+}
+
 export type Action =
   | SearchFlightsAction
   | SearchFlightsSuccessAction
@@ -70,3 +92,8 @@ export type AirportAction =
   | SearchAirportAction
   | SearchAirportSuccessAction
   | SearchAirportErrorAction;
+
+export type GetAirportAction =
+  | GetAirportDataAction
+  | GetAirportSuccessData
+  | GetAirportErrorData;

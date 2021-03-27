@@ -4,8 +4,14 @@ import {
   ActionType,
   AirlineActionType,
   AirportActionType,
+  GetAirportData,
 } from "../action-types";
-import { Action, AirlineAction, AirportAction } from "../actions";
+import {
+  Action,
+  AirlineAction,
+  AirportAction,
+  GetAirportAction,
+} from "../actions";
 
 export const getAirport = (term: string) => {
   return async (dispatch: Dispatch<Action>) => {
@@ -138,6 +144,68 @@ export const getAirportDetails = (airport_name: string) => {
     } catch (err) {
       dispatch({
         type: AirportActionType.SEARCH_AIRPORT_ERROR,
+        payload: err.message,
+      });
+
+      console.log(err);
+    }
+  };
+};
+
+export const getAirportData = (airport_name: string) => {
+  return async (dispatch: Dispatch<GetAirportAction>) => {
+    dispatch({
+      type: GetAirportData.GET_AIRPORT,
+    });
+
+    try {
+      const { data } = await axios.get(
+        `http://api.aviationstack.com/v1/airports?access_key=d838dac127f9516c99a63c5cf2071d4d`,
+        {
+          params: {
+            airport_name: airport_name,
+          },
+        }
+      );
+
+      const gmt = data.data.map((result: any) => {
+        return result.gmt;
+      });
+
+      const iata_code = data.data.map((result: any) => {
+        return result.iata_code;
+      });
+
+      const icao_code = data.data.map((result: any) => {
+        return result.icao_code;
+      });
+
+      const coordinates = data.data.map((result: any) => {
+        return result.latitude + result.longitude;
+      });
+
+      const country = data.data.map((result: any) => {
+        return result.country_name;
+      });
+
+      const timezone = data.data.map((result: any) => {
+        return result.timezone;
+      });
+
+      dispatch({
+        type: GetAirportData.GET_AIRPORT_SUCCESS,
+        payload: {
+          gmt: gmt,
+          iata_code: iata_code,
+          icao_code: icao_code,
+          coordinates: coordinates,
+          country: country,
+          timezone: timezone,
+        },
+      });
+    } catch (err) {
+      dispatch({
+        type: GetAirportData.GET_AIRPORT_ERROR,
         payload: err.message,
       });
 
