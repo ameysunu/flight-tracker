@@ -141,7 +141,7 @@ const Airports: React.FC = () => {
         >
           <Spinner
             style={{ alignSelf: "center" }}
-            animation="border"
+            animation="grow"
             role="status"
             variant="primary"
           >
