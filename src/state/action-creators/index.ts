@@ -160,7 +160,7 @@ export const getAirportData = (airport_name: string) => {
 
     try {
       const { data } = await axios.get(
-        `http://api.aviationstack.com/v1/airports?access_key=d838dac127f9516c99a63c5cf2071d4d`,
+        `http://api.aviationstack.com/v1/airports?access_key=b3dbfb353ff0bc5f4b22ff8c10f02e3e`,
         {
           params: {
             airport_name: airport_name,
@@ -172,9 +172,9 @@ export const getAirportData = (airport_name: string) => {
         return result.gmt;
       });
 
-      const flag = data.data.map((result: any) =>{
+      const flag = data.data.map((result: any) => {
         return result.country_iso2;
-      })
+      });
 
       const iata_code = data.data.map((result: any) => {
         return result.iata_code;
@@ -185,7 +185,7 @@ export const getAirportData = (airport_name: string) => {
       });
 
       const coordinates = data.data.map((result: any) => {
-        return result.latitude + "," +result.longitude;
+        return result.latitude + "," + result.longitude;
       });
 
       const country = data.data.map((result: any) => {

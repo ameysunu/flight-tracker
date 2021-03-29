@@ -51,7 +51,10 @@ const FlightsList: React.FC = () => {
             <Link to="/airports" className="nav-link">
               Airports
             </Link>
-            <Nav.Link> Routes </Nav.Link>
+            <Link to="/routes" className="nav-link">
+              {" "}
+              Routes{" "}
+            </Link>
           </Nav>
           <Form inline className="mr-sm-2" onSubmit={onSubmit}>
             <Form.Control

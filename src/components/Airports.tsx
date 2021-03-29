@@ -11,7 +11,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RootState } from "../state";
@@ -67,7 +67,10 @@ const Airports: React.FC = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link> Routes </Nav.Link>
+            <Link to="/routes" className="nav-link">
+              {" "}
+              Routes{" "}
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -170,7 +173,7 @@ const Airports: React.FC = () => {
           )}
           {!errorhandler && !loader && (
             <Modal show={show} centered backdrop="static" size="lg">
-              <Modal.Header style= {{ color: "#007BFF"}}>
+              <Modal.Header style={{ color: "#007BFF" }}>
                 <Modal.Title>{name} Airport</Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -179,7 +182,8 @@ const Airports: React.FC = () => {
                 ICAO: {icao} <br />
                 Coordinates: {coordinates} <br />
                 Timezone: {timezone} <br />
-                Country: {country} <img src = {countryFlag} width= "25px" alt= "flag"></img> <br />
+                Country: {country}{" "}
+                <img src={countryFlag} width="25px" alt="flag"></img> <br />
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="primary" onClick={handleClose}>
