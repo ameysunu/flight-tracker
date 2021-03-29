@@ -45,6 +45,7 @@ const Airports: React.FC = () => {
   const code = data?.code?.[0];
   const iata_code = value?.iata_code?.[0];
   const gmt = value?.gmt?.[0];
+  const flag = value?.flag?.[0];
   const icao = value?.icao_code?.[0];
   const coordinates = value?.coordinates?.[0];
   const country = value?.country?.[0];
@@ -54,6 +55,8 @@ const Airports: React.FC = () => {
     event.preventDefault();
     getAirportDetails(airport_name);
   };
+
+  const countryFlag = `https://www.countryflags.io/${flag}/flat/64.png`;
 
   return (
     <div>
@@ -79,7 +82,7 @@ const Airports: React.FC = () => {
                 type="text"
                 value={airport_name}
                 onChange={(e) => setAirport_name(e.target.value)}
-                placeholder="Search for a city or airport"
+                placeholder="Search for a city, airport or IATA code"
               />
               <Col md="auto"></Col>
             </Form>
@@ -167,7 +170,7 @@ const Airports: React.FC = () => {
           )}
           {!errorhandler && !loader && (
             <Modal show={show} centered backdrop="static" size="lg">
-              <Modal.Header>
+              <Modal.Header style= {{ color: "#007BFF"}}>
                 <Modal.Title>{name} Airport</Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -176,10 +179,10 @@ const Airports: React.FC = () => {
                 ICAO: {icao} <br />
                 Coordinates: {coordinates} <br />
                 Timezone: {timezone} <br />
-                Country: {country} <br />
+                Country: {country} <img src = {countryFlag} width= "25px" alt= "flag"></img> <br />
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="primary" onClick={handleClose}>
                   Close
                 </Button>
               </Modal.Footer>

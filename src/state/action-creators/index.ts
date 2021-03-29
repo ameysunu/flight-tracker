@@ -172,6 +172,10 @@ export const getAirportData = (airport_name: string) => {
         return result.gmt;
       });
 
+      const flag = data.data.map((result: any) =>{
+        return result.country_iso2;
+      })
+
       const iata_code = data.data.map((result: any) => {
         return result.iata_code;
       });
@@ -195,6 +199,7 @@ export const getAirportData = (airport_name: string) => {
       dispatch({
         type: GetAirportData.GET_AIRPORT_SUCCESS,
         payload: {
+          flag: flag,
           gmt: gmt,
           iata_code: iata_code,
           icao_code: icao_code,

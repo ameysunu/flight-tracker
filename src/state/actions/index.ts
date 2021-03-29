@@ -64,6 +64,7 @@ interface GetAirportDataAction {
 interface GetAirportSuccessData {
   type: GetAirportData.GET_AIRPORT_SUCCESS;
   payload: {
+    flag: string;
     gmt: string;
     iata_code: string;
     icao_code: string;
