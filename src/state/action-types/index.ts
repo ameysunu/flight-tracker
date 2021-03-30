@@ -21,3 +21,9 @@ export enum GetAirportData {
   GET_AIRPORT_SUCCESS = "get_airport_success",
   GET_AIRPORT_ERROR = "get_airport_error",
 }
+
+export enum GetRoutes {
+  GET_ROUTE = "get_route",
+  GET_ROUTE_SUCCESS = "get_route_success",
+  GET_ROUTE_ERROR= "get_route_error"
+}

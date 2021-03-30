@@ -5,12 +5,14 @@ import {
   AirlineActionType,
   AirportActionType,
   GetAirportData,
+  GetRoutes,
 } from "../action-types";
 import {
   Action,
   AirlineAction,
   AirportAction,
   GetAirportAction,
+  GetRoutesAction,
 } from "../actions";
 
 export const getAirport = (term: string) => {
@@ -211,6 +213,111 @@ export const getAirportData = (airport_name: string) => {
     } catch (err) {
       dispatch({
         type: GetAirportData.GET_AIRPORT_ERROR,
+        payload: err.message,
+      });
+
+      console.log(err);
+    }
+  };
+};
+
+export const getRoutes = (airport_name: string, dep_iata: string, flight_status: string) => {
+  return async (dispatch: Dispatch<GetRoutesAction>) => {
+    dispatch({
+      type: GetRoutes.GET_ROUTE,
+    });
+
+    try {
+      const { data } = await axios.get(
+        `http://api.aviationstack.com/v1/flights?access_key=b3dbfb353ff0bc5f4b22ff8c10f02e3e`,
+        {
+          params: {
+            airport_name: airport_name,
+            dep_iata: dep_iata,
+            flight_status: flight_status
+          },
+        }
+      );
+
+      const depiata = data.data.departure.map((result: any) => {
+        return result.iata;
+      });
+
+      const depairport = data.data.departure.map((result: any) => {
+        return result.airport;
+      });
+
+      const deptimezone = data.data.departure.map((result: any) => {
+        return result.timezone;
+      });
+
+      const depterminal = data.data.departure.map((result: any) => {
+        return result.terminal;
+      });
+
+      const depscheduled = data.data.departure.map((result: any) => {
+        return result.scheduled;
+      });
+
+      const depestimated = data.data.departure.map((result: any) => {
+        return result.estimated;
+      });
+
+      const depactual = data.data.departure.map((result: any) => {
+        return result.actual;
+      });
+      
+      const arriata = data.data.arrival.map((result: any) => {
+        return result.iata;
+      });
+
+      const arrairport = data.data.arrival.map((result: any) => {
+        return result.airport;
+      });
+
+      const arrtimezone = data.data.arrival.map((result: any) => {
+        return result.timezone;
+      });
+
+      const arrterminal = data.data.arrival.map((result: any) => {
+        return result.terminal;
+      });
+
+      const arrscheduled = data.data.arrival.map((result: any) => {
+        return result.scheduled;
+      });
+
+      const arrestimated = data.data.arrival.map((result: any) => {
+        return result.estimated;
+      });
+
+      const arractual = data.data.arrival.map((result: any) => {
+        return result.actual;
+      });
+
+      dispatch({
+        type: GetRoutes.GET_ROUTE_SUCCESS,
+        payload: {
+          dep_airport: depairport,
+          dep_iata: depiata,
+          dep_timezone: deptimezone,
+          dep_terminal: depterminal,
+          dep_scheduled: depscheduled,
+          dep_estimated: depestimated,
+          dep_actual: depactual,
+      
+          arr_airport: arrairport,
+          arr_iata: arriata,
+          arr_timezone: arrtimezone,
+          arr_terminal: arrterminal,
+          arr_scheduled: arrscheduled,
+          arr_estimated: arrestimated,
+          arr_actual: arractual
+        },
+      });
+    } catch (err) {
+      dispatch({
+        type: GetRoutes.GET_ROUTE_ERROR,
         payload: err.message,
       });
 

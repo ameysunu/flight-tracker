@@ -3,6 +3,7 @@ import {
   AirlineActionType,
   AirportActionType,
   GetAirportData,
+  GetRoutes,
 } from "../action-types";
 
 interface SearchFlightsAction {
@@ -79,6 +80,36 @@ interface GetAirportErrorData {
   payload: string;
 }
 
+interface GetRouteData {
+  type: GetRoutes.GET_ROUTE;
+}
+
+interface GetRouteSuccessData {
+  type: GetRoutes.GET_ROUTE_SUCCESS;
+  payload: {
+    dep_airport: string;
+    dep_iata: string;
+    dep_timezone: string;
+    dep_terminal: string;
+    dep_scheduled: string;
+    dep_estimated: string;
+    dep_actual: string;
+
+    arr_airport: string;
+    arr_iata: string;
+    arr_timezone: string;
+    arr_terminal: string;
+    arr_scheduled: string;
+    arr_estimated: string;
+    arr_actual: string;
+  };
+}
+
+interface GetRouteErrorData {
+  type: GetRoutes.GET_ROUTE_ERROR;
+  payload: string;
+}
+
 export type Action =
   | SearchFlightsAction
   | SearchFlightsSuccessAction
@@ -98,3 +129,8 @@ export type GetAirportAction =
   | GetAirportDataAction
   | GetAirportSuccessData
   | GetAirportErrorData;
+
+export type GetRoutesAction =
+  | GetRouteData
+  | GetRouteSuccessData
+  | GetRouteErrorData;
