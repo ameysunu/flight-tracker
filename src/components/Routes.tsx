@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Col,
@@ -22,23 +22,18 @@ const Routes: React.FC = () => {
 
   const selector = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
-
+  const [airlinename, setAirlinename] = useState("");
+  const [airlineiata, setAirlineiata] = useState("");
+  const [status, setStatus] = useState("");
   const { done } = selector.routerepo;
- 
 
-  useEffect(() => {
-    dispatch(getRoutes('flydubai','COK','landed'));
-    //eslint-disable-next-line
-    const dep_iata = done?.dep_iata?.[0];
-    const dep_airport= done?.dep_airport?.[0];
-    const dep_timezone= done?.timezone?.[0];
-    const dep_terminal= done?.terminal?.[0];
-    const dep_scheduled= done?.dep_scheduled?.[0];
-    const dep_estimated= done?.estimated?.[0];
-    const dep_actual= done?.actual?.[0];
-
+  const dep_iata = done?.dep_iata;
+  const arr_iata = done?.arr_iata;
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(getRoutes(airlinename, airlineiata, status));
     console.log(dep_iata);
-  }, [dispatch]);
+  };
 
   const popover = (
     <Popover id="popover-basic">
@@ -72,28 +67,42 @@ const Routes: React.FC = () => {
         <br />
         <Row>
           <Col>
-            <Form>
-              <Form.Control type="text" placeholder="Enter an airline" />
+            <Form onSubmit={onSubmit}>
+              <Form.Control
+                value={airlinename}
+                onChange={(e) => setAirlinename(e.target.value)}
+                type="text"
+                placeholder="Enter an airline"
+              />
               <br />
               <Form.Control
+                value={airlineiata}
+                onChange={(e) => setAirlineiata(e.target.value)}
                 type="text"
                 placeholder="Enter departure airport IATA"
               />
               <br />
               <Row>
                 <Col>
-                  <Form.Control as="select" defaultValue="Flight Status">
-                    <option>All</option>
-                    <option>Scheduled</option>
-                    <option>Active</option>
-                    <option>Landed</option>
-                    <option>Cancelled</option>
-                    <option>Incident</option>
-                    <option>Diverted</option>
+                  <Form.Control
+                    as="select"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    <option value="scheduled">Scheduled</option>
+                    <option value="active">Active</option>
+                    <option value="landed">Landed</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="incident">Incident</option>
+                    <option value="diverted">Diverted</option>
                   </Form.Control>
                 </Col>
                 <Col>
-                  <Button variant="primary"> Search </Button>
+                  <Button variant="primary" type="submit">
+                    {" "}
+                    Search{" "}
+                  </Button>
                 </Col>
               </Row>
 
@@ -108,6 +117,8 @@ const Routes: React.FC = () => {
           <Button variant="light"> Help? </Button>
         </OverlayTrigger>
       </div>
+      <ul>{dep_iata}</ul> 
+      <ul>{arr_iata}</ul>
     </div>
   );
 };
