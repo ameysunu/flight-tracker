@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Col,
@@ -9,13 +9,36 @@ import {
   Popover,
   Row,
 } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { RootState } from "../state";
+import { getRoutes } from "../state/action-creators";
 
 const Routes: React.FC = () => {
   const history = useHistory();
   const handleClick = () => {
     history.push("/");
   };
+
+  const selector = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
+
+  const { done } = selector.routerepo;
+ 
+
+  useEffect(() => {
+    dispatch(getRoutes('flydubai','COK','landed'));
+    //eslint-disable-next-line
+    const dep_iata = done?.dep_iata?.[0];
+    const dep_airport= done?.dep_airport?.[0];
+    const dep_timezone= done?.timezone?.[0];
+    const dep_terminal= done?.terminal?.[0];
+    const dep_scheduled= done?.dep_scheduled?.[0];
+    const dep_estimated= done?.estimated?.[0];
+    const dep_actual= done?.actual?.[0];
+
+    console.log(dep_iata);
+  }, [dispatch]);
 
   const popover = (
     <Popover id="popover-basic">

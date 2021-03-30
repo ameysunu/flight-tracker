@@ -221,7 +221,7 @@ export const getAirportData = (airport_name: string) => {
   };
 };
 
-export const getRoutes = (airport_name: string, dep_iata: string, flight_status: string) => {
+export const getRoutes = (airline_name: string, dep_iata: string, flight_status: string) => {
   return async (dispatch: Dispatch<GetRoutesAction>) => {
     dispatch({
       type: GetRoutes.GET_ROUTE,
@@ -232,67 +232,67 @@ export const getRoutes = (airport_name: string, dep_iata: string, flight_status:
         `http://api.aviationstack.com/v1/flights?access_key=b3dbfb353ff0bc5f4b22ff8c10f02e3e`,
         {
           params: {
-            airport_name: airport_name,
+            airline_name: airline_name,
             dep_iata: dep_iata,
             flight_status: flight_status
           },
         }
       );
 
-      const depiata = data.data.departure.map((result: any) => {
-        return result.iata;
+      const depiata = data.data.map((result: any) => {
+        return result.departure.iata;
       });
 
-      const depairport = data.data.departure.map((result: any) => {
-        return result.airport;
+      const depairport = data.data.map((result: any) => {
+        return result.departure.airport;
       });
 
-      const deptimezone = data.data.departure.map((result: any) => {
-        return result.timezone;
+      const deptimezone = data.data.map((result: any) => {
+        return result.departure.timezone;
       });
 
-      const depterminal = data.data.departure.map((result: any) => {
-        return result.terminal;
+      const depterminal = data.data.map((result: any) => {
+        return result.departure.terminal;
       });
 
-      const depscheduled = data.data.departure.map((result: any) => {
-        return result.scheduled;
+      const depscheduled = data.data.map((result: any) => {
+        return result.departure.scheduled;
       });
 
-      const depestimated = data.data.departure.map((result: any) => {
-        return result.estimated;
+      const depestimated = data.data.map((result: any) => {
+        return result.departure.estimated;
       });
 
-      const depactual = data.data.departure.map((result: any) => {
-        return result.actual;
+      const depactual = data.data.map((result: any) => {
+        return result.departure.actual;
       });
       
-      const arriata = data.data.arrival.map((result: any) => {
-        return result.iata;
+      const arriata = data.data.map((result: any) => {
+        return result.arrival.iata;
       });
 
-      const arrairport = data.data.arrival.map((result: any) => {
-        return result.airport;
+      const arrairport = data.data.map((result: any) => {
+        return result.arrival.airport;
       });
 
-      const arrtimezone = data.data.arrival.map((result: any) => {
-        return result.timezone;
+      const arrtimezone = data.data.map((result: any) => {
+        return result.arrival.timezone;
       });
 
-      const arrterminal = data.data.arrival.map((result: any) => {
-        return result.terminal;
+      const arrterminal = data.data.map((result: any) => {
+        return result.arrival.terminal;
       });
 
-      const arrscheduled = data.data.arrival.map((result: any) => {
-        return result.scheduled;
+      const arrscheduled = data.data.map((result: any) => {
+        return result.arrival.scheduled;
       });
 
-      const arrestimated = data.data.arrival.map((result: any) => {
-        return result.estimated;
+      const arrestimated = data.data.map((result: any) => {
+        return result.arrival.estimated;
       });
 
-      const arractual = data.data.arrival.map((result: any) => {
-        return result.actual;
+      const arractual = data.data.map((result: any) => {
+        return result.arrival.actual;
       });
 
       dispatch({
