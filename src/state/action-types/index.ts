@@ -25,5 +25,5 @@ export enum GetAirportData {
 export enum GetRoutes {
   GET_ROUTE = "get_route",
   GET_ROUTE_SUCCESS = "get_route_success",
-  GET_ROUTE_ERROR= "get_route_error"
+  GET_ROUTE_ERROR = "get_route_error",
 }

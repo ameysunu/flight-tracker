@@ -221,7 +221,12 @@ export const getAirportData = (airport_name: string) => {
   };
 };
 
-export const getRoutes = (airline_name: string, dep_iata: string, flight_status: string) => {
+export const getRoutes = (
+  airline_name: string,
+  dep_iata: string,
+  arr_iata: string,
+  flight_status: string
+) => {
   return async (dispatch: Dispatch<GetRoutesAction>) => {
     dispatch({
       type: GetRoutes.GET_ROUTE,
@@ -233,8 +238,9 @@ export const getRoutes = (airline_name: string, dep_iata: string, flight_status:
         {
           params: {
             airline_name: airline_name,
+            arr_iata: arr_iata,
             dep_iata: dep_iata,
-            flight_status: flight_status
+            flight_status: flight_status,
           },
         }
       );
@@ -266,7 +272,7 @@ export const getRoutes = (airline_name: string, dep_iata: string, flight_status:
       const depactual = data.data.map((result: any) => {
         return result.departure.actual;
       });
-      
+
       const arriata = data.data.map((result: any) => {
         return result.arrival.iata;
       });
@@ -305,14 +311,14 @@ export const getRoutes = (airline_name: string, dep_iata: string, flight_status:
           dep_scheduled: depscheduled,
           dep_estimated: depestimated,
           dep_actual: depactual,
-      
+
           arr_airport: arrairport,
           arr_iata: arriata,
           arr_timezone: arrtimezone,
           arr_terminal: arrterminal,
           arr_scheduled: arrscheduled,
           arr_estimated: arrestimated,
-          arr_actual: arractual
+          arr_actual: arractual,
         },
       });
     } catch (err) {

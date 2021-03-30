@@ -19,19 +19,19 @@ const Routes: React.FC = () => {
   const handleClick = () => {
     history.push("/");
   };
-
-  const selector = useSelector((state: RootState) => state);
-  const dispatch = useDispatch();
   const [airlinename, setAirlinename] = useState("");
   const [airlineiata, setAirlineiata] = useState("");
+  const [arrivaliata, setArrivaliata] = useState("");
   const [status, setStatus] = useState("");
+  const selector = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
   const { done } = selector.routerepo;
 
-  const dep_iata = done?.dep_iata;
-  const arr_iata = done?.arr_iata;
+  const dep_iata = done?.dep_iata?.[0];
+  const arr_iata = done?.arr_iata?.[0];
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(getRoutes(airlinename, airlineiata, status));
+    dispatch(getRoutes(airlinename, airlineiata, arrivaliata, status));
     console.log(dep_iata);
   };
 
@@ -85,6 +85,14 @@ const Routes: React.FC = () => {
               <Row>
                 <Col>
                   <Form.Control
+                    value={arrivaliata}
+                    onChange={(e) => setArrivaliata(e.target.value)}
+                    type="text"
+                    placeholder="Enter arrival airport IATA"
+                  />
+                </Col>
+                <Col>
+                  <Form.Control
                     as="select"
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
@@ -99,7 +107,7 @@ const Routes: React.FC = () => {
                   </Form.Control>
                 </Col>
                 <Col>
-                  <Button variant="primary" type="submit">
+                  <Button block variant="primary" type="submit">
                     {" "}
                     Search{" "}
                   </Button>
@@ -117,7 +125,7 @@ const Routes: React.FC = () => {
           <Button variant="light"> Help? </Button>
         </OverlayTrigger>
       </div>
-      <ul>{dep_iata}</ul> 
+      <ul>{dep_iata}</ul>
       <ul>{arr_iata}</ul>
     </div>
   );
