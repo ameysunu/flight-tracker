@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Alert,
   Button,
+  Card,
   Col,
   Form,
   Nav,
@@ -10,6 +11,7 @@ import {
   Popover,
   Row,
   Spinner,
+  Table,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -29,10 +31,23 @@ const Routes: React.FC = () => {
   const selector = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const { done } = selector.routerepo;
-  const { load, error } = useTypedSelector((state: any) => state.routerepo);
+  const { load, error} = useTypedSelector((state: any) => state.routerepo);
 
   const dep_iata = done?.dep_iata?.[0];
   const arr_iata = done?.arr_iata?.[0];
+  const flightnum = done?.flightnum?.[0];
+  const flighticao = done?.flighticao?.[0];
+  const airline = done?.airlinename?.[0];
+  const dep_airport = done?.dep_airport?.[0];
+  const arr_airport = done?.arr_airport?.[0];
+  const dep_timezone = done?.dep_timezone?.[0];
+  const arr_timezone = done?.arr_timezone?.[0];
+  const dep_scheduled = done?.dep_scheduled?.[0];
+  const arr_scheduled = done?.arr_scheduled?.[0];
+  const dep_actual = done?.dep_actual?.[0];
+  const arr_estimated = done?.arr_estimated?.[0];
+
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(getRoutes(airlinename, airlineiata, arrivaliata, status));
@@ -129,6 +144,8 @@ const Routes: React.FC = () => {
           <Button variant="light"> Help? </Button>
         </OverlayTrigger>
       </div>
+      <br />
+      <br />
       {load && (
         <div
           style={{
@@ -163,10 +180,53 @@ const Routes: React.FC = () => {
           </Alert>
         </div>
       )}
-      {!load && !error && (
-        <div>
-          <ul>{dep_iata}</ul>
-          <ul>{arr_iata}</ul>
+      {!error && !load && (
+        <div style={{ paddingLeft: "15%", paddingRight: "15%" }}>
+          <Card>
+            <Card.Header as="h5">
+              {flightnum}/{flighticao} <h6>{airline}</h6>{" "}
+            </Card.Header>
+            <Card.Body>
+              <Card.Title>
+                <Table
+                  striped
+                  bordered
+                  hover
+                  variant="dark"
+                  responsive
+                  borderless
+                >
+                  <thead>
+                    <tr>
+                      <th style={{ textAlign: "center" }}>
+                        <h3>{dep_iata}</h3> {dep_airport}{" "}
+                        <h6> {dep_timezone}</h6>{" "}
+                      </th>
+                      <th style={{ textAlign: "center" }}>
+                        <h3>{arr_iata}</h3> {arr_airport}{" "}
+                        <h6> {arr_timezone}</h6>{" "}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ textAlign: "center" }}>SCHEDULED: {dep_scheduled}</td>
+                      <td style={{ textAlign: "center" }}>SCHEDULED: {arr_scheduled}</td>
+                    </tr>
+                    <tr>
+                    <td style={{ textAlign: "center" }}>ACTUAL: {dep_actual} </td>
+                    <td style={{ textAlign: "center" }}>ESTIMATED: {arr_estimated} </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </Card.Title>
+              <Card.Text>
+                With supporting text below as a natural lead-in to additional
+                content.
+              </Card.Text>
+              <Button variant="primary">Go somewhere</Button>
+            </Card.Body>
+          </Card>
         </div>
       )}
     </div>

@@ -309,6 +309,10 @@ export const getRoutes = (
         return result.flight.icao;
       });
 
+      const airlinename = data.data.map((result: any) => {
+        return result.airline.name;
+      })
+
       dispatch({
         type: GetRoutes.GET_ROUTE_SUCCESS,
         payload: {
@@ -330,6 +334,7 @@ export const getRoutes = (
 
           flightnum: flightnum,
           flighticao: flighticao,
+          airlinename: airlinename,
         },
       });
     } catch (err) {
