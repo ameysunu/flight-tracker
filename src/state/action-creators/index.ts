@@ -301,6 +301,14 @@ export const getRoutes = (
         return result.arrival.actual;
       });
 
+      const flightnum = data.data.map((result: any) => {
+        return result.flight.iata;
+      });
+
+      const flighticao = data.data.map((result: any) => {
+        return result.flight.icao;
+      });
+
       dispatch({
         type: GetRoutes.GET_ROUTE_SUCCESS,
         payload: {
@@ -319,6 +327,9 @@ export const getRoutes = (
           arr_scheduled: arrscheduled,
           arr_estimated: arrestimated,
           arr_actual: arractual,
+
+          flightnum: flightnum,
+          flighticao: flighticao,
         },
       });
     } catch (err) {

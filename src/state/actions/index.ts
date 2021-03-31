@@ -102,6 +102,9 @@ interface GetRouteSuccessData {
     arr_scheduled: string;
     arr_estimated: string;
     arr_actual: string;
+
+    flightnum: string;
+    flighticao: string;
   };
 }
 
