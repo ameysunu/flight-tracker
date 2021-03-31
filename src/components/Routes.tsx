@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Alert,
   Button,
   Col,
   Form,
@@ -8,9 +9,11 @@ import {
   OverlayTrigger,
   Popover,
   Row,
+  Spinner,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RootState } from "../state";
 import { getRoutes } from "../state/action-creators";
 
@@ -26,6 +29,7 @@ const Routes: React.FC = () => {
   const selector = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const { done } = selector.routerepo;
+  const { load, error } = useTypedSelector((state: any) => state.routerepo);
 
   const dep_iata = done?.dep_iata?.[0];
   const arr_iata = done?.arr_iata?.[0];
@@ -125,8 +129,46 @@ const Routes: React.FC = () => {
           <Button variant="light"> Help? </Button>
         </OverlayTrigger>
       </div>
-      <ul>{dep_iata}</ul>
-      <ul>{arr_iata}</ul>
+      {load && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Spinner
+            style={{ alignSelf: "center" }}
+            animation="grow"
+            role="status"
+            variant="primary"
+          >
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      )}
+      {error && (
+        <div
+          style={{
+            position: "fixed",
+            top: "70%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Alert variant="danger">
+            <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
+            <p>{error}</p>
+          </Alert>
+        </div>
+      )}
+      {!load && !error && (
+        <div>
+          <ul>{dep_iata}</ul>
+          <ul>{arr_iata}</ul>
+        </div>
+      )}
     </div>
   );
 };
