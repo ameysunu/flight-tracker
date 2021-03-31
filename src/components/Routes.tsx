@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Col,
+  Figure,
   Form,
   Nav,
   Navbar,
@@ -46,7 +47,11 @@ const Routes: React.FC = () => {
   const arr_scheduled = done?.arr_scheduled?.[0];
   const dep_actual = done?.dep_actual?.[0];
   const arr_estimated = done?.arr_estimated?.[0];
+  const flightiata = done?.airlineiata?.[0];
+  const dep_terminal = done?.dep_terminal?.[0];
+  const arr_terminal = done?.arr_terminal?.[0];
 
+  const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${flightiata}`;
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -188,6 +193,14 @@ const Routes: React.FC = () => {
             </Card.Header>
             <Card.Body>
               <Card.Title>
+              <Figure>
+                  <Figure.Image
+                    width={171}
+                    height={180}
+                    alt={flightiata}
+                    src={flightImage}
+                  />
+                </Figure>
                 <Table
                   striped
                   bordered
@@ -210,6 +223,10 @@ const Routes: React.FC = () => {
                   </thead>
                   <tbody>
                     <tr>
+                      <td style={{ textAlign: "center" }} > Terminal: {dep_terminal}</td>
+                      <td style={{ textAlign: "center" }} > Terminal: {arr_terminal}</td>
+                      </tr>
+                    <tr>
                       <td style={{ textAlign: "center" }}>SCHEDULED: {dep_scheduled}</td>
                       <td style={{ textAlign: "center" }}>SCHEDULED: {arr_scheduled}</td>
                     </tr>
@@ -224,7 +241,6 @@ const Routes: React.FC = () => {
                 With supporting text below as a natural lead-in to additional
                 content.
               </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
             </Card.Body>
           </Card>
         </div>

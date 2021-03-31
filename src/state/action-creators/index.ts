@@ -311,6 +311,10 @@ export const getRoutes = (
 
       const airlinename = data.data.map((result: any) => {
         return result.airline.name;
+      });
+
+      const airlineiata = data.data.map((result: any) => {
+        return result.airline.iata;
       })
 
       dispatch({
@@ -335,6 +339,7 @@ export const getRoutes = (
           flightnum: flightnum,
           flighticao: flighticao,
           airlinename: airlinename,
+          airlineiata: airlineiata,
         },
       });
     } catch (err) {

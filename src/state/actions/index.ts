@@ -106,6 +106,7 @@ interface GetRouteSuccessData {
     flightnum: string;
     flighticao: string;
     airlinename: string;
+    airlineiata: string;
   };
 }
 
