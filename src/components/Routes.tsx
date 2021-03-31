@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import {
   Alert,
   Button,
-  Card,
   Col,
   Figure,
   Form,
+  Modal,
   Nav,
   Navbar,
   OverlayTrigger,
@@ -25,6 +25,9 @@ const Routes: React.FC = () => {
   const handleClick = () => {
     history.push("/");
   };
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+
   const [airlinename, setAirlinename] = useState("");
   const [airlineiata, setAirlineiata] = useState("");
   const [arrivaliata, setArrivaliata] = useState("");
@@ -32,7 +35,7 @@ const Routes: React.FC = () => {
   const selector = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const { done } = selector.routerepo;
-  const { load, error} = useTypedSelector((state: any) => state.routerepo);
+  const { load, error } = useTypedSelector((state: any) => state.routerepo);
 
   const dep_iata = done?.dep_iata?.[0];
   const arr_iata = done?.arr_iata?.[0];
@@ -57,6 +60,7 @@ const Routes: React.FC = () => {
     event.preventDefault();
     dispatch(getRoutes(airlinename, airlineiata, arrivaliata, status));
     console.log(dep_iata);
+    setShow(true);
   };
 
   const popover = (
@@ -186,64 +190,66 @@ const Routes: React.FC = () => {
         </div>
       )}
       {!error && !load && (
-        <div style={{ paddingLeft: "15%", paddingRight: "15%" }}>
-          <Card>
-            <Card.Header as="h5">
+        <Modal show={show} centered backdrop="static" size="lg">
+          <Modal.Header>
+            <Modal.Title>
               {flightnum}/{flighticao} <h6>{airline}</h6>{" "}
-            </Card.Header>
-            <Card.Body>
-              <Card.Title>
-              <Figure>
-                  <Figure.Image
-                    width={171}
-                    height={180}
-                    alt={flightiata}
-                    src={flightImage}
-                  />
-                </Figure>
-                <Table
-                  striped
-                  bordered
-                  hover
-                  variant="dark"
-                  responsive
-                  borderless
-                >
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: "center" }}>
-                        <h3>{dep_iata}</h3> {dep_airport}{" "}
-                        <h6> {dep_timezone}</h6>{" "}
-                      </th>
-                      <th style={{ textAlign: "center" }}>
-                        <h3>{arr_iata}</h3> {arr_airport}{" "}
-                        <h6> {arr_timezone}</h6>{" "}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style={{ textAlign: "center" }} > Terminal: {dep_terminal}</td>
-                      <td style={{ textAlign: "center" }} > Terminal: {arr_terminal}</td>
-                      </tr>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>SCHEDULED: {dep_scheduled}</td>
-                      <td style={{ textAlign: "center" }}>SCHEDULED: {arr_scheduled}</td>
-                    </tr>
-                    <tr>
-                    <td style={{ textAlign: "center" }}>ACTUAL: {dep_actual} </td>
-                    <td style={{ textAlign: "center" }}>ESTIMATED: {arr_estimated} </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Card.Title>
-              <Card.Text>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </div>
+            </Modal.Title>
+            <Figure>
+              <Figure.Image
+                width={171}
+                height={180}
+                alt={flightiata}
+                src={flightImage}
+              />
+            </Figure>
+          </Modal.Header>
+          <Modal.Body>
+            <Table striped bordered hover variant="dark" responsive borderless>
+              <thead>
+                <tr>
+                  <th style={{ textAlign: "center" }}>
+                    <h3>{dep_iata}</h3> {dep_airport} <h6> {dep_timezone}</h6>{" "}
+                  </th>
+                  <th style={{ textAlign: "center" }}>
+                    <h3>{arr_iata}</h3> {arr_airport} <h6> {arr_timezone}</h6>{" "}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ textAlign: "center" }}>
+                    {" "}
+                    Terminal: {dep_terminal}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    {" "}
+                    Terminal: {arr_terminal}
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ textAlign: "center" }}>
+                    SCHEDULED: {dep_scheduled}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    SCHEDULED: {arr_scheduled}
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ textAlign: "center" }}>ACTUAL: {dep_actual} </td>
+                  <td style={{ textAlign: "center" }}>
+                    ESTIMATED: {arr_estimated}{" "}
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );
