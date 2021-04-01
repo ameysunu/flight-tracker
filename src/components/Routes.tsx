@@ -53,6 +53,7 @@ const Routes: React.FC = () => {
   const flightiata = done?.airlineiata?.[0];
   const dep_terminal = done?.dep_terminal?.[0];
   const arr_terminal = done?.arr_terminal?.[0];
+  const flightstatus = done?.flightstatus?.[0];
 
   const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${flightiata}`;
 
@@ -243,6 +244,7 @@ const Routes: React.FC = () => {
                 </tr>
               </tbody>
             </Table>
+            Status: {flightstatus}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={handleClose}>
