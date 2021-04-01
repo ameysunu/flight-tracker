@@ -54,8 +54,12 @@ const Routes: React.FC = () => {
   const dep_terminal = done?.dep_terminal?.[0];
   const arr_terminal = done?.arr_terminal?.[0];
   const flightstatus = done?.flightstatus?.[0];
+  const codeairline = done?.codeairline?.[0];
+  const codeairlineiata = done?.codeairlineiata?.[0];
+  const codeflight = done?.codeflight?.[0];
 
   const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${flightiata}`;
+  const codeImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${codeairlineiata}`;
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -245,6 +249,28 @@ const Routes: React.FC = () => {
               </tbody>
             </Table>
             Status: {flightstatus}
+            <br /> <br />
+            <h2> Codeshare Flight </h2>
+            <Table striped bordered hover responsive borderless>
+              <thead>
+                <tr>
+                  <th style={{ textAlign: "center" }}>
+                    <img
+                      width="80"
+                      src={codeImage}
+                      alt={codeairlineiata}
+                    ></img>
+                  </th>
+                  <th style={{ textAlign: "center" }}>{codeairline}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ textAlign: "center" }}>IATA</td>
+                  <td style={{ textAlign: "center" }}>{codeflight}</td>
+                </tr>
+              </tbody>
+            </Table>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={handleClose}>

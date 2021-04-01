@@ -321,6 +321,27 @@ export const getRoutes = (
         return result.flight_status;
       })
 
+      const codeairline = data.data.map((result:any) => {
+        if (result.flight.codeshared ===  null){
+          return 'N/A';
+        }
+        return result.flight.codeshared.airline_name;
+      });
+
+      const codeairlineiata = data.data.map((result:any) => {
+        if (result.flight.codeshared ===  null){
+          return 'N/A';
+        }
+        return result.flight.codeshared.airline_iata;
+      })
+
+      const codeflight = data.data.map((result:any) => {
+        if (result.flight.codeshared ===  null){
+          return 'N/A';
+        }
+        return result.flight.codeshared.flight_iata;
+      })
+
       dispatch({
         type: GetRoutes.GET_ROUTE_SUCCESS,
         payload: {
@@ -345,6 +366,10 @@ export const getRoutes = (
           airlinename: airlinename,
           airlineiata: airlineiata,
           flightstatus: flightstatus,
+
+          codeairline: codeairline,
+          codeairlineiata: codeairlineiata,
+          codeflight: codeflight
         },
       });
     } catch (err) {

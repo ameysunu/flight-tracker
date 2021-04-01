@@ -108,6 +108,11 @@ interface GetRouteSuccessData {
     airlinename: string;
     airlineiata: string;
     flightstatus: string;
+
+    
+    codeairline: string;
+    codeairlineiata: string;
+    codeflight: string;
   };
 }
 
