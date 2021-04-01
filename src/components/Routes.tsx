@@ -255,11 +255,7 @@ const Routes: React.FC = () => {
               <thead>
                 <tr>
                   <th style={{ textAlign: "center" }}>
-                    <img
-                      width="80"
-                      src={codeImage}
-                      alt={codeairlineiata}
-                    ></img>
+                    <img width="80" src={codeImage} alt={codeairlineiata}></img>
                   </th>
                   <th style={{ textAlign: "center" }}>{codeairline}</th>
                 </tr>
