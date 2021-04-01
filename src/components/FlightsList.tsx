@@ -79,7 +79,7 @@ const FlightsList: React.FC = () => {
             Begin by searching for an airline, airports or even live routes.
           </p>
           <p>
-            <Button variant="primary">Learn more</Button>
+            <Button variant="primary" href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO" >Learn more</Button>
           </p>
         </Jumbotron>
       </div>
