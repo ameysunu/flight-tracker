@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RootState } from "../state";
-import { getRoutes } from "../state/action-creators";
+import { getRoutes, getWeatherDetails } from "../state/action-creators";
 
 const Routes: React.FC = () => {
   const history = useHistory();
@@ -37,7 +37,9 @@ const Routes: React.FC = () => {
   const selector = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const { done } = selector.routerepo;
+  const { val } = selector.weatherrepo;
   const { load, error } = useTypedSelector((state: any) => state.routerepo);
+  const { loading, err } = useTypedSelector((state: any) => state.weatherrepo);
 
   const dep_iata = done?.dep_iata?.[0];
   const arr_iata = done?.arr_iata?.[0];
@@ -59,6 +61,7 @@ const Routes: React.FC = () => {
   const codeairline = done?.codeairline?.[0];
   const codeairlineiata = done?.codeairlineiata?.[0];
   const codeflight = done?.codeflight?.[0];
+  const name = val?.name?.[0];
 
   const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${flightiata}`;
   const codeImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${codeairlineiata}`;
@@ -66,6 +69,7 @@ const Routes: React.FC = () => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(getRoutes(airlinename, airlineiata, arrivaliata, status));
+    dispatch(getWeatherDetails('OMDB'));
     console.log(dep_iata);
     setShow(true);
   };
@@ -294,7 +298,7 @@ const Routes: React.FC = () => {
               </Modal.Footer>
             </Tab>
             <Tab eventKey="weather" title="Weather">
-              Weather
+              {name}
             </Tab>
           </Tabs>
         </Modal>

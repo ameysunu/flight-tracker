@@ -4,6 +4,7 @@ import airlineReducer from "./airlineReducer";
 import airportreducer from "./airportReducer";
 import airportdatareducer from "./airportData";
 import routereducer from "./routeData";
+import weatherreducer from "./weatherReducer";
 
 const reducers = combineReducers({
   repositories: repositoryReducer,
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   airportrepo: airportreducer,
   airportdatarepo: airportdatareducer,
   routerepo: routereducer,
+  weatherrepo: weatherreducer
 });
 
 export default reducers;

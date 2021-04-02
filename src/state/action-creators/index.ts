@@ -6,6 +6,7 @@ import {
   AirportActionType,
   GetAirportData,
   GetRoutes,
+  GetWeather,
 } from "../action-types";
 import {
   Action,
@@ -13,6 +14,7 @@ import {
   AirportAction,
   GetAirportAction,
   GetRoutesAction,
+  GetWeatherAction,
 } from "../actions";
 
 export const getAirport = (term: string) => {
@@ -315,32 +317,32 @@ export const getRoutes = (
 
       const airlineiata = data.data.map((result: any) => {
         return result.airline.iata;
-      })
+      });
 
-      const flightstatus = data.data.map((result: any) =>{
+      const flightstatus = data.data.map((result: any) => {
         return result.flight_status;
-      })
+      });
 
-      const codeairline = data.data.map((result:any) => {
-        if (result.flight.codeshared ===  null){
-          return 'N/A';
+      const codeairline = data.data.map((result: any) => {
+        if (result.flight.codeshared === null) {
+          return "N/A";
         }
         return result.flight.codeshared.airline_name;
       });
 
-      const codeairlineiata = data.data.map((result:any) => {
-        if (result.flight.codeshared ===  null){
-          return 'N/A';
+      const codeairlineiata = data.data.map((result: any) => {
+        if (result.flight.codeshared === null) {
+          return "N/A";
         }
         return result.flight.codeshared.airline_iata;
-      })
+      });
 
-      const codeflight = data.data.map((result:any) => {
-        if (result.flight.codeshared ===  null){
-          return 'N/A';
+      const codeflight = data.data.map((result: any) => {
+        if (result.flight.codeshared === null) {
+          return "N/A";
         }
         return result.flight.codeshared.flight_iata;
-      })
+      });
 
       dispatch({
         type: GetRoutes.GET_ROUTE_SUCCESS,
@@ -369,12 +371,74 @@ export const getRoutes = (
 
           codeairline: codeairline,
           codeairlineiata: codeairlineiata,
-          codeflight: codeflight
+          codeflight: codeflight,
         },
       });
     } catch (err) {
       dispatch({
         type: GetRoutes.GET_ROUTE_ERROR,
+        payload: err.message,
+      });
+
+      console.log(err);
+    }
+  };
+};
+
+export const getWeatherDetails = (icao: string) => {
+  return async (dispatch: Dispatch<GetWeatherAction>) => {
+    dispatch({
+      type: GetWeather.GET_WEATHER,
+    });
+
+    try {
+      const { data } = await axios.get(
+        `https://api.checkwx.com/metar/${icao}/decoded`,
+        {
+          headers: {
+            "X-API-Key": "0a08631badf343acb1d194bae9",
+          },
+        }
+      );
+
+      const name = data.data.map((result: any) => {
+        return result.station.name;
+      });
+
+      const celsius = data.data.map((result: any) => {
+        return result.temperature.celsius;
+      });
+
+      const fahrenheit = data.data.map((result: any) => {
+        return result.temperature.fahrenheit;
+      });
+
+      const visibility = data.data.map((result: any) => {
+        return result.visibility.meters;
+      });
+
+      const windspeed_kts = data.data.map((result: any) => {
+        return result.wind.speed_kts;
+      });
+
+      const clouds = data.data.map((result: any) => {
+        return result.clouds.text;
+      });
+
+      dispatch({
+        type: GetWeather.GET_WEATHER_SUCCESS,
+        payload: {
+          name: name,
+          celsius: celsius,
+          fahrenheit: fahrenheit,
+          visibility: visibility,
+          windspeed_kts: windspeed_kts,
+          clouds: clouds,
+        },
+      });
+    } catch (err) {
+      dispatch({
+        type: GetWeather.GET_WEATHER_ERROR,
         payload: err.message,
       });
 
