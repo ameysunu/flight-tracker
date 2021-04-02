@@ -428,7 +428,7 @@ export const getWeatherDetails = (icao: string) => {
       });
 
       const clouds = data.data.map((result: any) => {
-        return result.clouds.code;
+        return result.humidity.percent;
       });
 
       dispatch({

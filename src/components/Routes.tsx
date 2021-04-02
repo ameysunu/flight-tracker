@@ -81,7 +81,7 @@ const Routes: React.FC = () => {
 
   const weatherTap = () => {
     dispatch(getWeatherDetails(arr_icao));
-  }
+  };
 
   const popover = (
     <Popover id="popover-basic">
@@ -306,7 +306,7 @@ const Routes: React.FC = () => {
                 </Button>
               </Modal.Footer>
             </Tab>
-            <Tab eventKey="weather" title="Weather" onEnter= {weatherTap}>
+            <Tab eventKey="weather" title="Weather" onEnter={weatherTap}>
               {loading && (
                 <div
                   style={{
@@ -353,9 +353,19 @@ const Routes: React.FC = () => {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    Visibility: {visibility} <br />
-                    Windspeed: {windspeed_kts} <br />
-                    Clouds: {clouds}
+                    <Table striped bordered hover variant="dark" borderless>
+                      <tbody>
+                        <tr>
+                          <td>Visibility: {visibility}</td>
+                        </tr>
+                        <tr>
+                          <td>Windspeed: {windspeed_kts}</td>
+                        </tr>
+                        <tr>
+                          <td> Humidity: {clouds}% </td>
+                        </tr>
+                      </tbody>
+                    </Table>
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="primary" onClick={handleClose}>
