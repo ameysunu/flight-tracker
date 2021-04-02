@@ -113,6 +113,8 @@ interface GetRouteSuccessData {
     codeairline: string;
     codeairlineiata: string;
     codeflight: string;
+    
+    arr_icao: string;
   };
 }
 

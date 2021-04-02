@@ -323,6 +323,10 @@ export const getRoutes = (
         return result.flight_status;
       });
 
+      const arr_icao = data.data.map((result: any) => {
+        return result.arrival.icao;
+      })
+
       const codeairline = data.data.map((result: any) => {
         if (result.flight.codeshared === null) {
           return "N/A";
@@ -372,6 +376,8 @@ export const getRoutes = (
           codeairline: codeairline,
           codeairlineiata: codeairlineiata,
           codeflight: codeflight,
+
+          arr_icao: arr_icao
         },
       });
     } catch (err) {
@@ -422,7 +428,7 @@ export const getWeatherDetails = (icao: string) => {
       });
 
       const clouds = data.data.map((result: any) => {
-        return result.clouds.text;
+        return result.clouds.code;
       });
 
       dispatch({

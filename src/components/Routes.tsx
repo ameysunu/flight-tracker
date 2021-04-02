@@ -61,7 +61,13 @@ const Routes: React.FC = () => {
   const codeairline = done?.codeairline?.[0];
   const codeairlineiata = done?.codeairlineiata?.[0];
   const codeflight = done?.codeflight?.[0];
+  const arr_icao = done?.arr_icao?.[0];
   const name = val?.name?.[0];
+  const celsius = val?.celsius?.[0];
+  const fahrenheit = val?.fahrenheit?.[0];
+  const visibility = val?.visibility?.[0];
+  const windspeed_kts = val?.windspeed_kts?.[0];
+  const clouds = val?.clouds?.[0];
 
   const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${flightiata}`;
   const codeImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${codeairlineiata}`;
@@ -69,10 +75,13 @@ const Routes: React.FC = () => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(getRoutes(airlinename, airlineiata, arrivaliata, status));
-    dispatch(getWeatherDetails('OMDB'));
     console.log(dep_iata);
     setShow(true);
   };
+
+  const weatherTap = () => {
+    dispatch(getWeatherDetails(arr_icao));
+  }
 
   const popover = (
     <Popover id="popover-basic">
@@ -297,8 +306,64 @@ const Routes: React.FC = () => {
                 </Button>
               </Modal.Footer>
             </Tab>
-            <Tab eventKey="weather" title="Weather">
-              {name}
+            <Tab eventKey="weather" title="Weather" onEnter= {weatherTap}>
+              {loading && (
+                <div
+                  style={{
+                    position: "fixed",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  <Spinner
+                    style={{ alignSelf: "center" }}
+                    animation="border"
+                    role="status"
+                    variant="primary"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                </div>
+              )}
+              {err && (
+                <div
+                  style={{
+                    position: "fixed",
+                    top: "70%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  <Alert variant="danger">
+                    <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
+                    <p>{error}</p>
+                  </Alert>
+                </div>
+              )}
+              {!loading && !err && (
+                <div>
+                  <Modal.Header>
+                    <Modal.Title>
+                      <h2> {name} </h2>{" "}
+                      <h5>
+                        {" "}
+                        {celsius}C / {fahrenheit}F
+                      </h5>
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    Visibility: {visibility} <br />
+                    Windspeed: {windspeed_kts} <br />
+                    Clouds: {clouds}
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="primary" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </div>
+              )}
             </Tab>
           </Tabs>
         </Modal>
