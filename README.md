@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Flight Tracker
+
+Get airlines, airports and aircraft routes details.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
