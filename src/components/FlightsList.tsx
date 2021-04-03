@@ -16,6 +16,7 @@ import {
 
 const FlightsList: React.FC = () => {
   const [term, setTerm] = useState("");
+  const [show, setShow] = useState(false);
   const [greeting, setGreeting] = useState("");
   const { getAirport } = useActions();
   const { data, error, loading } = useTypedSelector(
@@ -40,6 +41,8 @@ const FlightsList: React.FC = () => {
     event.preventDefault();
     getAirport(term);
   };
+  const handleClose = () => setShow(false);
+  const openPop = () => setShow(true);
 
   return (
     <div>
@@ -79,9 +82,25 @@ const FlightsList: React.FC = () => {
             Begin by searching for an airline, airports or even live routes.
           </p>
           <p>
-            <Button variant="primary" href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO" >Learn more</Button>
+            <Button variant="primary" onClick={openPop}>
+              Learn more
+            </Button>
           </p>
         </Jumbotron>
+
+        <Alert show={show} variant="success" onClose={handleClose} dismissible>
+          <Alert.Heading>Hello! 👋 </Alert.Heading>
+          <p>
+            You can begin by searching any Airline Name, Airport Name and even
+            an aircraft route. If you don't find your desired route, make sure
+            that you have entered the correct aircraft name and IATA code.
+          </p>
+          <hr />
+          <p className="mb-0">
+            All routes found are active, scheduled or landed, depending on your
+            preference.
+          </p>
+        </Alert>
       </div>
       {error && (
         <div
