@@ -45,7 +45,7 @@ const FlightsList: React.FC = () => {
   const openPop = () => setShow(true);
 
   return (
-    <div>
+    <div style={{ backgroundColor: "black" }}>
       <Navbar
         collapseOnSelect
         expand="lg"
@@ -152,7 +152,12 @@ const FlightsList: React.FC = () => {
         data.map((name: any) => (
           <div
             key={name}
-            style={{ padding: "10px", alignItems: "center", cursor: "pointer" }}
+            style={{
+              padding: "10px",
+              alignItems: "center",
+              cursor: "pointer",
+              backgroundColor: "black",
+            }}
           >
             <Link
               onClick={() => getAirline(name)}
@@ -160,9 +165,12 @@ const FlightsList: React.FC = () => {
                 pathname: "/details",
                 state: name,
               }}
-              style={{ textDecoration: "none", color: "black" }}
+              style={{
+                textDecoration: "none",
+                color: "white",
+              }}
             >
-              <Card>
+              <Card border="light" style={{ backgroundColor: "black" }}>
                 <Card.Body>{name}</Card.Body>
               </Card>
             </Link>
