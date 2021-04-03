@@ -4,6 +4,7 @@ import {
   AirportActionType,
   GetAirportData,
   GetRoutes,
+  GetWeather,
 } from "../action-types";
 
 interface SearchFlightsAction {
@@ -109,15 +110,37 @@ interface GetRouteSuccessData {
     airlineiata: string;
     flightstatus: string;
 
-    
     codeairline: string;
     codeairlineiata: string;
     codeflight: string;
+    
+    arr_icao: string;
   };
 }
 
 interface GetRouteErrorData {
   type: GetRoutes.GET_ROUTE_ERROR;
+  payload: string;
+}
+
+interface GetWeatherData {
+  type: GetWeather.GET_WEATHER;
+}
+
+interface GetWeatherSuccessData {
+  type: GetWeather.GET_WEATHER_SUCCESS;
+  payload: {
+    name: string;
+    celsius: string;
+    fahrenheit: string;
+    visibility: string;
+    windspeed_kts: string;
+    clouds: string;
+  };
+}
+
+interface GetWeatherErrorData {
+  type: GetWeather.GET_WEATHER_ERROR;
   payload: string;
 }
 
@@ -145,3 +168,8 @@ export type GetRoutesAction =
   | GetRouteData
   | GetRouteSuccessData
   | GetRouteErrorData;
+
+export type GetWeatherAction =
+  | GetWeatherData
+  | GetWeatherSuccessData
+  | GetWeatherErrorData;

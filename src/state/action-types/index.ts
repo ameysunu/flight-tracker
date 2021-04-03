@@ -27,3 +27,9 @@ export enum GetRoutes {
   GET_ROUTE_SUCCESS = "get_route_success",
   GET_ROUTE_ERROR = "get_route_error",
 }
+
+export enum GetWeather{
+  GET_WEATHER = "get_weather",
+  GET_WEATHER_SUCCESS = "get_weather_success",
+  GET_WEATHER_ERROR = "get_weather_error",
+}
