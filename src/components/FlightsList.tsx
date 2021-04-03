@@ -46,7 +46,12 @@ const FlightsList: React.FC = () => {
 
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        variant="dark"
+        style={{ backgroundColor: "#212121" }}
+      >
         <Navbar.Brand href="#home">Flight Tracker</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -73,16 +78,21 @@ const FlightsList: React.FC = () => {
           </Form>
         </Navbar.Collapse>
       </Navbar>
-      <br />
-      <br />
-      <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-        <Jumbotron>
-          <h1>{greeting}</h1>
-          <p>
+      <div style={{ backgroundColor: "black", height: "50px" }}> </div>
+      <div
+        style={{
+          paddingLeft: "10px",
+          paddingRight: "10px",
+          backgroundColor: "black",
+        }}
+      >
+        <Jumbotron className="jumbotron">
+          <h1 style={{ color: "white" }}>{greeting}</h1>
+          <p style={{ color: "white" }}>
             Begin by searching for an airline, airports or even live routes.
           </p>
           <p>
-            <Button variant="primary" onClick={openPop}>
+            <Button variant="outline-light" onClick={openPop}>
               Learn more
             </Button>
           </p>

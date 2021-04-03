@@ -60,7 +60,7 @@ const Airports: React.FC = () => {
 
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand style={{ cursor: "pointer" }} onClick={handleClick}>
           Home
         </Navbar.Brand>

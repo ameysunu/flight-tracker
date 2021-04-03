@@ -21,6 +21,8 @@ import { Link, useHistory } from "react-router-dom";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RootState } from "../state";
 import { getRoutes, getWeatherDetails } from "../state/action-creators";
+import { makeStyles } from "@material-ui/core/styles";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const Routes: React.FC = () => {
   const history = useHistory();
@@ -72,6 +74,41 @@ const Routes: React.FC = () => {
   const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${flightiata}`;
   const codeImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${codeairlineiata}`;
 
+  const useStyles = makeStyles({
+    root: {
+      width: "100%",
+    },
+  });
+
+  const classes = useStyles();
+  const [progress, setProgress] = React.useState(0);
+  const [buffer, setBuffer] = React.useState(10);
+
+  const progressRef = React.useRef(() => {});
+  React.useEffect(() => {
+    progressRef.current = () => {
+      if (progress > 100) {
+        setProgress(0);
+        setBuffer(10);
+      } else {
+        const diff = Math.random() * 10;
+        const diff2 = Math.random() * 10;
+        setProgress(progress + diff);
+        setBuffer(progress + diff + diff2);
+      }
+    };
+  });
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      progressRef.current();
+    }, 500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(getRoutes(airlinename, airlineiata, arrivaliata, status));
@@ -95,7 +132,7 @@ const Routes: React.FC = () => {
 
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand style={{ cursor: "pointer" }} onClick={handleClick}>
           Home
         </Navbar.Brand>
@@ -177,21 +214,29 @@ const Routes: React.FC = () => {
       <br />
       {load && (
         <div
+          className={classes.root}
           style={{
             position: "fixed",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
+            paddingLeft: "20%",
+            paddingRight: "20%",
           }}
         >
-          <Spinner
+          <LinearProgress
+            variant="buffer"
+            value={progress}
+            valueBuffer={buffer}
+          />
+          {/* <Spinner
             style={{ alignSelf: "center" }}
             animation="grow"
             role="status"
             variant="primary"
           >
             <span className="sr-only">Loading...</span>
-          </Spinner>
+          </Spinner> */}
         </div>
       )}
       {error && (
