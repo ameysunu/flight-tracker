@@ -141,7 +141,7 @@ const FlightsList: React.FC = () => {
             style={{ alignSelf: "center" }}
             animation="border"
             role="status"
-            variant="primary"
+            variant="light"
           >
             <span className="sr-only">Loading...</span>
           </Spinner>
