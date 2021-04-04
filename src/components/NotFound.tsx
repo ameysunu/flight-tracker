@@ -13,6 +13,7 @@ const NotFound: React.FC = () => {
     <div
       style={{
         position: "fixed",
+        color: "white",
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",

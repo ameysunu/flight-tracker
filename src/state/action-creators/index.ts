@@ -164,9 +164,10 @@ export const getAirportData = (airport_name: string) => {
 
     try {
       const { data } = await axios.get(
-        `http://api.aviationstack.com/v1/airports?access_key=b3dbfb353ff0bc5f4b22ff8c10f02e3e`,
+        `http://api.aviationstack.com/v1/airports`,
         {
           params: {
+            access_key: process.env.REACT_APP_AVSTACK_KEY,
             airport_name: airport_name,
           },
         }
@@ -236,9 +237,10 @@ export const getRoutes = (
 
     try {
       const { data } = await axios.get(
-        `http://api.aviationstack.com/v1/flights?access_key=b3dbfb353ff0bc5f4b22ff8c10f02e3e`,
+        `http://api.aviationstack.com/v1/flights`,
         {
           params: {
+            access_key: process.env.REACT_APP_AVSTACK_KEY,
             airline_name: airline_name,
             arr_iata: arr_iata,
             dep_iata: dep_iata,

@@ -81,33 +81,6 @@ const Routes: React.FC = () => {
   });
 
   const classes = useStyles();
-  const [progress, setProgress] = React.useState(0);
-  const [buffer, setBuffer] = React.useState(10);
-
-  const progressRef = React.useRef(() => {});
-  React.useEffect(() => {
-    progressRef.current = () => {
-      if (progress > 100) {
-        setProgress(0);
-        setBuffer(10);
-      } else {
-        const diff = Math.random() * 10;
-        const diff2 = Math.random() * 10;
-        setProgress(progress + diff);
-        setBuffer(progress + diff + diff2);
-      }
-    };
-  });
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      progressRef.current();
-    }, 500);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -122,8 +95,13 @@ const Routes: React.FC = () => {
 
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Title as="h3">Help</Popover.Title>
-      <Popover.Content>
+      <Popover.Title
+        as="h3"
+        style={{ backgroundColor: "#212121", color: "white" }}
+      >
+        Help
+      </Popover.Title>
+      <Popover.Content style={{ backgroundColor: "black", color: "white" }}>
         If you are having trouble finding airline name and IATA, then head back
         to use our <strong>airport</strong> and <strong>airline</strong> finder.
       </Popover.Content>
@@ -131,8 +109,13 @@ const Routes: React.FC = () => {
   );
 
   return (
-    <div>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <div style={{ backgroundColor: "black", color: "white" }}>
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        style={{ backgroundColor: "#212121" }}
+        variant="dark"
+      >
         <Navbar.Brand style={{ cursor: "pointer" }} onClick={handleClick}>
           Home
         </Navbar.Brand>
@@ -158,6 +141,7 @@ const Routes: React.FC = () => {
                 onChange={(e) => setAirlinename(e.target.value)}
                 type="text"
                 placeholder="Enter an airline"
+                style={{ backgroundColor: "black", color: "white" }}
               />
               <br />
               <Form.Control
@@ -165,6 +149,7 @@ const Routes: React.FC = () => {
                 onChange={(e) => setAirlineiata(e.target.value)}
                 type="text"
                 placeholder="Enter departure airport IATA"
+                style={{ backgroundColor: "black", color: "white" }}
               />
               <br />
               <Row>
@@ -174,6 +159,7 @@ const Routes: React.FC = () => {
                     onChange={(e) => setArrivaliata(e.target.value)}
                     type="text"
                     placeholder="Enter arrival airport IATA"
+                    style={{ backgroundColor: "black", color: "white" }}
                   />
                 </Col>
                 <Col>
@@ -181,6 +167,7 @@ const Routes: React.FC = () => {
                     as="select"
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
+                    style={{ backgroundColor: "black", color: "white" }}
                   >
                     <option value="">All</option>
                     <option value="scheduled">Scheduled</option>
@@ -207,7 +194,7 @@ const Routes: React.FC = () => {
         <br />
 
         <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-          <Button variant="light"> Help? </Button>
+          <Button variant="dark"> Help? </Button>
         </OverlayTrigger>
       </div>
       <br />
@@ -224,11 +211,7 @@ const Routes: React.FC = () => {
             paddingRight: "20%",
           }}
         >
-          <LinearProgress
-            variant="buffer"
-            value={progress}
-            valueBuffer={buffer}
-          />
+          <LinearProgress />
           {/* <Spinner
             style={{ alignSelf: "center" }}
             animation="grow"
