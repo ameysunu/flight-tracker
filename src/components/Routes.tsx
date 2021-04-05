@@ -15,6 +15,7 @@ import {
   Tab,
   Table,
 } from "react-bootstrap";
+import { AirplanemodeActive, Cloud } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { useTypedSelector } from "../hooks/useTypedSelector";
@@ -238,173 +239,6 @@ const Routes: React.FC = () => {
       )}
       {!error && !load && (
         <Modal show={show} centered backdrop="static" size="lg">
-          {/* <Tabs defaultActiveKey="flight" id="uncontrolled-tab-example">
-            <Tab eventKey="flight" title="Flight">
-              <Modal.Header
-                style={{ backgroundColor: "black", color: "white" }}
-              >
-                <Modal.Title>
-                  {flightnum}/{flighticao} <h6>{airline}</h6>{" "}
-                </Modal.Title>
-                <Figure>
-                  <Figure.Image
-                    width={171}
-                    height={180}
-                    alt={flightiata}
-                    src={flightImage}
-                  />
-                </Figure>
-              </Modal.Header>
-              <Modal.Body>
-                <Table
-                  striped
-                  bordered
-                  hover
-                  variant="dark"
-                  responsive
-                  borderless
-                >
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: "center" }}>
-                        <h3>{dep_iata}</h3> {dep_airport}{" "}
-                        <h6> {dep_timezone}</h6>{" "}
-                      </th>
-                      <th style={{ textAlign: "center" }}>
-                        <h3>{arr_iata}</h3> {arr_airport}{" "}
-                        <h6> {arr_timezone}</h6>{" "}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>
-                        {" "}
-                        Terminal: {dep_terminal}
-                      </td>
-                      <td style={{ textAlign: "center" }}>
-                        {" "}
-                        Terminal: {arr_terminal}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>
-                        SCHEDULED: {dep_scheduled}
-                      </td>
-                      <td style={{ textAlign: "center" }}>
-                        SCHEDULED: {arr_scheduled}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>
-                        ACTUAL: {dep_actual}{" "}
-                      </td>
-                      <td style={{ textAlign: "center" }}>
-                        ESTIMATED: {arr_estimated}{" "}
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-                Status: {flightstatus}
-                <br /> <br />
-                <h2> Codeshare Flight </h2>
-                <Table striped bordered hover responsive borderless>
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: "center" }}>
-                        <img
-                          width="80"
-                          src={codeImage}
-                          alt={codeairlineiata}
-                        ></img>
-                      </th>
-                      <th style={{ textAlign: "center" }}>{codeairline}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>IATA</td>
-                      <td style={{ textAlign: "center" }}>{codeflight}</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="primary" onClick={handleClose}>
-                  Close
-                </Button>
-              </Modal.Footer>
-            </Tab>
-            <Tab eventKey="weather" title="Weather" onEnter={weatherTap}>
-              {loading && (
-                <div
-                  style={{
-                    position: "fixed",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  <Spinner
-                    style={{ alignSelf: "center" }}
-                    animation="border"
-                    role="status"
-                    variant="primary"
-                  >
-                    <span className="sr-only">Loading...</span>
-                  </Spinner>
-                </div>
-              )}
-              {err && (
-                <div
-                  style={{
-                    position: "fixed",
-                    top: "70%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  <Alert variant="danger">
-                    <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
-                    <p>{error}</p>
-                  </Alert>
-                </div>
-              )}
-              {!loading && !err && (
-                <div>
-                  <Modal.Header>
-                    <Modal.Title>
-                      <h2> {name} </h2>{" "}
-                      <h5>
-                        {" "}
-                        {celsius}C / {fahrenheit}F
-                      </h5>
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <Table striped bordered hover variant="dark" borderless>
-                      <tbody>
-                        <tr>
-                          <td>Visibility: {visibility}</td>
-                        </tr>
-                        <tr>
-                          <td>Windspeed: {windspeed_kts}</td>
-                        </tr>
-                        <tr>
-                          <td> Humidity: {clouds}% </td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </div>
-              )}
-            </Tab>
-          </Tabs> */}
           <div
             style={{
               paddingLeft: "10px",
@@ -420,10 +254,16 @@ const Routes: React.FC = () => {
                 <Col sm={3}>
                   <Nav variant="pills" className="flex-column">
                     <Nav.Item>
-                      <Nav.Link eventKey="first">Flight</Nav.Link>
+                      <Nav.Link eventKey="first">
+                        {" "}
+                        <AirplanemodeActive> </AirplanemodeActive> Flight
+                      </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link eventKey="second">Weather</Nav.Link>
+                      <Nav.Link eventKey="second">
+                        {" "}
+                        <Cloud> </Cloud> Weather
+                      </Nav.Link>
                     </Nav.Item>
                   </Nav>
                 </Col>
