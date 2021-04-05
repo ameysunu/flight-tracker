@@ -10,3 +10,11 @@ body {
 .subheading {
   font-weight: 300;
 }
+
+html {
+  background-color: black;
+}
+
+.jumbotron {
+  background-color: #212121;
+}

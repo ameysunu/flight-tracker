@@ -44,11 +44,16 @@ const FlightDetails: React.FC = () => {
   const callSign = data?.callsign?.[0];
   const flightname = data.flightname?.[0];
 
-  const flightDeet = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${iata}`;
+  const flightDeet = `https://daisycon.io/images/airline/?width=300&height=150&color=000000&iata=${iata}`;
 
   return (
-    <div>
-      <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+    <div style={{ backgroundColor: "black" }}>
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        style={{ backgroundColor: "#212121" }}
+        variant="dark"
+      >
         <Navbar.Brand style={{ cursor: "pointer" }} onClick={handleClick}>
           Home
         </Navbar.Brand>
@@ -95,7 +100,7 @@ const FlightDetails: React.FC = () => {
             style={{ alignSelf: "center" }}
             animation="border"
             role="status"
-            variant="primary"
+            variant="light"
           >
             <span className="sr-only">Loading...</span>
           </Spinner>
@@ -104,10 +109,18 @@ const FlightDetails: React.FC = () => {
       {!error && !loading && (
         <div style={{ paddingLeft: "10%", paddingRight: "10%" }}>
           <Col>
-            <Card>
-              <Card.Header> Airline Details</Card.Header>
+            <Card
+              border="dark"
+              style={{ backgroundColor: "black", color: "white" }}
+            >
+              <Card.Header
+                style={{ backgroundColor: "#212121", color: "white" }}
+              >
+                {" "}
+                Airline Details
+              </Card.Header>
               <Card.Body>
-                <Figure>
+                <Figure style={{ backgroundColor: "black" }}>
                   <Figure.Image
                     width={171}
                     height={180}

@@ -45,8 +45,13 @@ const FlightsList: React.FC = () => {
   const openPop = () => setShow(true);
 
   return (
-    <div>
-      <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+    <div style={{ backgroundColor: "black" }}>
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        variant="dark"
+        style={{ backgroundColor: "#212121" }}
+      >
         <Navbar.Brand href="#home">Flight Tracker</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -73,16 +78,21 @@ const FlightsList: React.FC = () => {
           </Form>
         </Navbar.Collapse>
       </Navbar>
-      <br />
-      <br />
-      <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-        <Jumbotron>
-          <h1>{greeting}</h1>
-          <p>
+      <div style={{ backgroundColor: "black", height: "50px" }}> </div>
+      <div
+        style={{
+          paddingLeft: "10px",
+          paddingRight: "10px",
+          backgroundColor: "black",
+        }}
+      >
+        <Jumbotron className="jumbotron">
+          <h1 style={{ color: "white" }}>{greeting}</h1>
+          <p style={{ color: "white" }}>
             Begin by searching for an airline, airports or even live routes.
           </p>
           <p>
-            <Button variant="primary" onClick={openPop}>
+            <Button variant="outline-light" onClick={openPop}>
               Learn more
             </Button>
           </p>
@@ -131,7 +141,7 @@ const FlightsList: React.FC = () => {
             style={{ alignSelf: "center" }}
             animation="border"
             role="status"
-            variant="primary"
+            variant="light"
           >
             <span className="sr-only">Loading...</span>
           </Spinner>
@@ -142,7 +152,12 @@ const FlightsList: React.FC = () => {
         data.map((name: any) => (
           <div
             key={name}
-            style={{ padding: "10px", alignItems: "center", cursor: "pointer" }}
+            style={{
+              padding: "10px",
+              alignItems: "center",
+              cursor: "pointer",
+              backgroundColor: "black",
+            }}
           >
             <Link
               onClick={() => getAirline(name)}
@@ -150,9 +165,12 @@ const FlightsList: React.FC = () => {
                 pathname: "/details",
                 state: name,
               }}
-              style={{ textDecoration: "none", color: "black" }}
+              style={{
+                textDecoration: "none",
+                color: "white",
+              }}
             >
-              <Card>
+              <Card border="light" style={{ backgroundColor: "black" }}>
                 <Card.Body>{name}</Card.Body>
               </Card>
             </Link>

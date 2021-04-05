@@ -14,13 +14,15 @@ import {
   Spinner,
   Tab,
   Table,
-  Tabs,
 } from "react-bootstrap";
+import { AirplanemodeActive, Cloud } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RootState } from "../state";
 import { getRoutes, getWeatherDetails } from "../state/action-creators";
+import { makeStyles } from "@material-ui/core/styles";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const Routes: React.FC = () => {
   const history = useHistory();
@@ -69,8 +71,16 @@ const Routes: React.FC = () => {
   const windspeed_kts = val?.windspeed_kts?.[0];
   const clouds = val?.clouds?.[0];
 
-  const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${flightiata}`;
-  const codeImage = `https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${codeairlineiata}`;
+  const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=000000&iata=${flightiata}`;
+  const codeImage = `https://daisycon.io/images/airline/?width=300&height=150&color=000000&iata=${codeairlineiata}`;
+
+  const useStyles = makeStyles({
+    root: {
+      width: "100%",
+    },
+  });
+
+  const classes = useStyles();
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -85,8 +95,13 @@ const Routes: React.FC = () => {
 
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Title as="h3">Help</Popover.Title>
-      <Popover.Content>
+      <Popover.Title
+        as="h3"
+        style={{ backgroundColor: "#212121", color: "white" }}
+      >
+        Help
+      </Popover.Title>
+      <Popover.Content style={{ backgroundColor: "black", color: "white" }}>
         If you are having trouble finding airline name and IATA, then head back
         to use our <strong>airport</strong> and <strong>airline</strong> finder.
       </Popover.Content>
@@ -94,8 +109,13 @@ const Routes: React.FC = () => {
   );
 
   return (
-    <div>
-      <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+    <div style={{ backgroundColor: "black", color: "white" }}>
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        style={{ backgroundColor: "#212121" }}
+        variant="dark"
+      >
         <Navbar.Brand style={{ cursor: "pointer" }} onClick={handleClick}>
           Home
         </Navbar.Brand>
@@ -121,6 +141,7 @@ const Routes: React.FC = () => {
                 onChange={(e) => setAirlinename(e.target.value)}
                 type="text"
                 placeholder="Enter an airline"
+                style={{ backgroundColor: "black", color: "white" }}
               />
               <br />
               <Form.Control
@@ -128,6 +149,7 @@ const Routes: React.FC = () => {
                 onChange={(e) => setAirlineiata(e.target.value)}
                 type="text"
                 placeholder="Enter departure airport IATA"
+                style={{ backgroundColor: "black", color: "white" }}
               />
               <br />
               <Row>
@@ -137,6 +159,7 @@ const Routes: React.FC = () => {
                     onChange={(e) => setArrivaliata(e.target.value)}
                     type="text"
                     placeholder="Enter arrival airport IATA"
+                    style={{ backgroundColor: "black", color: "white" }}
                   />
                 </Col>
                 <Col>
@@ -144,6 +167,7 @@ const Routes: React.FC = () => {
                     as="select"
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
+                    style={{ backgroundColor: "black", color: "white" }}
                   >
                     <option value="">All</option>
                     <option value="scheduled">Scheduled</option>
@@ -170,28 +194,32 @@ const Routes: React.FC = () => {
         <br />
 
         <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-          <Button variant="light"> Help? </Button>
+          <Button variant="dark"> Help? </Button>
         </OverlayTrigger>
       </div>
       <br />
       <br />
       {load && (
         <div
+          className={classes.root}
           style={{
             position: "fixed",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
+            paddingLeft: "20%",
+            paddingRight: "20%",
           }}
         >
-          <Spinner
+          <LinearProgress />
+          {/* <Spinner
             style={{ alignSelf: "center" }}
             animation="grow"
             role="status"
             variant="primary"
           >
             <span className="sr-only">Loading...</span>
-          </Spinner>
+          </Spinner> */}
         </div>
       )}
       {error && (
@@ -211,171 +239,225 @@ const Routes: React.FC = () => {
       )}
       {!error && !load && (
         <Modal show={show} centered backdrop="static" size="lg">
-          <Tabs defaultActiveKey="flight" id="uncontrolled-tab-example">
-            <Tab eventKey="flight" title="Flight">
-              <Modal.Header>
-                <Modal.Title>
-                  {flightnum}/{flighticao} <h6>{airline}</h6>{" "}
-                </Modal.Title>
-                <Figure>
-                  <Figure.Image
-                    width={171}
-                    height={180}
-                    alt={flightiata}
-                    src={flightImage}
-                  />
-                </Figure>
-              </Modal.Header>
-              <Modal.Body>
-                <Table
-                  striped
-                  bordered
-                  hover
-                  variant="dark"
-                  responsive
-                  borderless
-                >
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: "center" }}>
-                        <h3>{dep_iata}</h3> {dep_airport}{" "}
-                        <h6> {dep_timezone}</h6>{" "}
-                      </th>
-                      <th style={{ textAlign: "center" }}>
-                        <h3>{arr_iata}</h3> {arr_airport}{" "}
-                        <h6> {arr_timezone}</h6>{" "}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>
+          <div
+            style={{
+              paddingLeft: "10px",
+              paddingRight: "10px",
+              paddingTop: "10px",
+              paddingBottom: "10px",
+              backgroundColor: "black",
+              color: "white",
+            }}
+          >
+            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+              <Row>
+                <Col sm={3}>
+                  <Nav variant="pills" className="flex-column">
+                    <Nav.Item>
+                      <Nav.Link eventKey="first">
                         {" "}
-                        Terminal: {dep_terminal}
-                      </td>
-                      <td style={{ textAlign: "center" }}>
+                        <AirplanemodeActive> </AirplanemodeActive> Flight
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link eventKey="second">
                         {" "}
-                        Terminal: {arr_terminal}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>
-                        SCHEDULED: {dep_scheduled}
-                      </td>
-                      <td style={{ textAlign: "center" }}>
-                        SCHEDULED: {arr_scheduled}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>
-                        ACTUAL: {dep_actual}{" "}
-                      </td>
-                      <td style={{ textAlign: "center" }}>
-                        ESTIMATED: {arr_estimated}{" "}
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-                Status: {flightstatus}
-                <br /> <br />
-                <h2> Codeshare Flight </h2>
-                <Table striped bordered hover responsive borderless>
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: "center" }}>
-                        <img
-                          width="80"
-                          src={codeImage}
-                          alt={codeairlineiata}
-                        ></img>
-                      </th>
-                      <th style={{ textAlign: "center" }}>{codeairline}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>IATA</td>
-                      <td style={{ textAlign: "center" }}>{codeflight}</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="primary" onClick={handleClose}>
-                  Close
-                </Button>
-              </Modal.Footer>
-            </Tab>
-            <Tab eventKey="weather" title="Weather" onEnter={weatherTap}>
-              {loading && (
-                <div
-                  style={{
-                    position: "fixed",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  <Spinner
-                    style={{ alignSelf: "center" }}
-                    animation="border"
-                    role="status"
-                    variant="primary"
-                  >
-                    <span className="sr-only">Loading...</span>
-                  </Spinner>
-                </div>
-              )}
-              {err && (
-                <div
-                  style={{
-                    position: "fixed",
-                    top: "70%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  <Alert variant="danger">
-                    <Alert.Heading>Oh snap! That's bad :(</Alert.Heading>
-                    <p>{error}</p>
-                  </Alert>
-                </div>
-              )}
-              {!loading && !err && (
-                <div>
-                  <Modal.Header>
-                    <Modal.Title>
-                      <h2> {name} </h2>{" "}
-                      <h5>
-                        {" "}
-                        {celsius}C / {fahrenheit}F
-                      </h5>
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <Table striped bordered hover variant="dark" borderless>
-                      <tbody>
-                        <tr>
-                          <td>Visibility: {visibility}</td>
-                        </tr>
-                        <tr>
-                          <td>Windspeed: {windspeed_kts}</td>
-                        </tr>
-                        <tr>
-                          <td> Humidity: {clouds}% </td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </div>
-              )}
-            </Tab>
-          </Tabs>
+                        <Cloud> </Cloud> Weather
+                      </Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </Col>
+                <Col sm={9}>
+                  <Tab.Content>
+                    <Tab.Pane eventKey="first">
+                      <Modal.Header
+                        style={{ backgroundColor: "black", color: "white" }}
+                      >
+                        <Modal.Title>
+                          {flightnum}/{flighticao} <h6>{airline}</h6>{" "}
+                        </Modal.Title>
+                        <Figure>
+                          <Figure.Image
+                            width={171}
+                            height={180}
+                            alt={flightiata}
+                            src={flightImage}
+                          />
+                        </Figure>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Table
+                          striped
+                          bordered
+                          hover
+                          variant="dark"
+                          responsive
+                          borderless
+                        >
+                          <thead>
+                            <tr>
+                              <th style={{ textAlign: "center" }}>
+                                <h3>{dep_iata}</h3> {dep_airport}{" "}
+                                <h6> {dep_timezone}</h6>{" "}
+                              </th>
+                              <th style={{ textAlign: "center" }}>
+                                <h3>{arr_iata}</h3> {arr_airport}{" "}
+                                <h6> {arr_timezone}</h6>{" "}
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td style={{ textAlign: "center" }}>
+                                {" "}
+                                Terminal: {dep_terminal}
+                              </td>
+                              <td style={{ textAlign: "center" }}>
+                                {" "}
+                                Terminal: {arr_terminal}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style={{ textAlign: "center" }}>
+                                SCHEDULED: {dep_scheduled}
+                              </td>
+                              <td style={{ textAlign: "center" }}>
+                                SCHEDULED: {arr_scheduled}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style={{ textAlign: "center" }}>
+                                ACTUAL: {dep_actual}{" "}
+                              </td>
+                              <td style={{ textAlign: "center" }}>
+                                ESTIMATED: {arr_estimated}{" "}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                        Status: {flightstatus}
+                        <br /> <br />
+                        <h2> Codeshare Flight </h2>
+                        <Table
+                          striped
+                          bordered
+                          hover
+                          responsive
+                          borderless
+                          style={{ color: "white" }}
+                        >
+                          <thead>
+                            <tr>
+                              <th style={{ textAlign: "center" }}>
+                                <img
+                                  width="80"
+                                  src={codeImage}
+                                  alt={codeairlineiata}
+                                ></img>
+                              </th>
+                              <th style={{ textAlign: "center" }}>
+                                {codeairline}
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td style={{ textAlign: "center" }}>IATA</td>
+                              <td style={{ textAlign: "center" }}>
+                                {codeflight}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="primary" onClick={handleClose}>
+                          Close
+                        </Button>
+                      </Modal.Footer>
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="second" onEnter={weatherTap}>
+                      {loading && (
+                        <div
+                          style={{
+                            position: "fixed",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                          }}
+                        >
+                          <Spinner
+                            style={{ alignSelf: "center" }}
+                            animation="border"
+                            role="status"
+                            variant="primary"
+                          >
+                            <span className="sr-only">Loading...</span>
+                          </Spinner>
+                        </div>
+                      )}
+                      {err && (
+                        <div
+                          style={{
+                            position: "fixed",
+                            top: "70%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                          }}
+                        >
+                          <Alert variant="danger">
+                            <Alert.Heading>
+                              Oh snap! That's bad :(
+                            </Alert.Heading>
+                            <p>{error}</p>
+                          </Alert>
+                        </div>
+                      )}
+                      {!loading && !err && (
+                        <div>
+                          <Modal.Header>
+                            <Modal.Title>
+                              <h2> {name} </h2>{" "}
+                              <h5>
+                                {" "}
+                                {celsius}C / {fahrenheit}F
+                              </h5>
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <Table
+                              striped
+                              bordered
+                              hover
+                              variant="dark"
+                              borderless
+                            >
+                              <tbody>
+                                <tr>
+                                  <td>Visibility: {visibility}</td>
+                                </tr>
+                                <tr>
+                                  <td>Windspeed: {windspeed_kts}</td>
+                                </tr>
+                                <tr>
+                                  <td> Humidity: {clouds}% </td>
+                                </tr>
+                              </tbody>
+                            </Table>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button variant="primary" onClick={handleClose}>
+                              Close
+                            </Button>
+                          </Modal.Footer>
+                        </div>
+                      )}
+                    </Tab.Pane>
+                  </Tab.Content>
+                </Col>
+              </Row>
+            </Tab.Container>
+          </div>
         </Modal>
       )}
     </div>

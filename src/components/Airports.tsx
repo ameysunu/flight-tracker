@@ -59,8 +59,13 @@ const Airports: React.FC = () => {
   const countryFlag = `https://www.countryflags.io/${flag}/flat/64.png`;
 
   return (
-    <div>
-      <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+    <div style={{ backgroundColor: "black", color: "white" }}>
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        style={{ backgroundColor: "#212121" }}
+        variant="dark"
+      >
         <Navbar.Brand style={{ cursor: "pointer" }} onClick={handleClick}>
           Home
         </Navbar.Brand>
@@ -86,6 +91,7 @@ const Airports: React.FC = () => {
                 value={airport_name}
                 onChange={(e) => setAirport_name(e.target.value)}
                 placeholder="Search for a city, airport or IATA code"
+                style={{ backgroundColor: "black", color: "white" }}
               />
               <Col md="auto"></Col>
             </Form>
@@ -122,7 +128,7 @@ const Airports: React.FC = () => {
             style={{ alignSelf: "center" }}
             animation="border"
             role="status"
-            variant="primary"
+            variant="light"
           >
             <span className="sr-only">Loading...</span>
           </Spinner>
@@ -150,7 +156,7 @@ const Airports: React.FC = () => {
                 style={{ alignSelf: "center" }}
                 animation="grow"
                 role="status"
-                variant="primary"
+                variant="light"
               >
                 <span className="sr-only">Loading...</span>
               </Spinner>
@@ -173,10 +179,12 @@ const Airports: React.FC = () => {
           )}
           {!errorhandler && !loader && (
             <Modal show={show} centered backdrop="static" size="lg">
-              <Modal.Header style={{ color: "#007BFF" }}>
+              <Modal.Header
+                style={{ color: "white", backgroundColor: "#212121" }}
+              >
                 <Modal.Title>{name} Airport</Modal.Title>
               </Modal.Header>
-              <Modal.Body>
+              <Modal.Body style={{ color: "white", backgroundColor: "black" }}>
                 GMT: {gmt} <br />
                 IATA: {iata_code} <br />
                 ICAO: {icao} <br />
@@ -185,8 +193,10 @@ const Airports: React.FC = () => {
                 Country: {country}{" "}
                 <img src={countryFlag} width="25px" alt="flag"></img> <br />
               </Modal.Body>
-              <Modal.Footer>
-                <Button variant="primary" onClick={handleClose}>
+              <Modal.Footer
+                style={{ color: "white", backgroundColor: "#212121" }}
+              >
+                <Button variant="outline-light" onClick={handleClose}>
                   Close
                 </Button>
               </Modal.Footer>
