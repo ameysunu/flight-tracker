@@ -7,6 +7,7 @@ import FlightDetails from "./FlightDetails";
 import NotFound from "./NotFound";
 import Airports from "./Airports";
 import Routes from "./Routes";
+import Map from "../maps/map";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
           <Route exact path="/details" component={FlightDetails} />
           <Route exact path="/airports" component={Airports} />
           <Route exact path="/routes" component={Routes} />
+          <Route exact path="/map" component={Map} />
           <Route component={NotFound} />
         </Switch>
       </Provider>

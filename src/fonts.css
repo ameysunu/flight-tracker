@@ -18,3 +18,11 @@ html {
 .jumbotron {
   background-color: #212121;
 }
+
+.map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
