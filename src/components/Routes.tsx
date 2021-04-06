@@ -221,14 +221,6 @@ const Routes: React.FC = () => {
           }}
         >
           <LinearProgress />
-          {/* <Spinner
-            style={{ alignSelf: "center" }}
-            animation="grow"
-            role="status"
-            variant="primary"
-          >
-            <span className="sr-only">Loading...</span>
-          </Spinner> */}
         </div>
       )}
       {error && (
@@ -460,6 +452,7 @@ const Routes: React.FC = () => {
                                   iata: map_iata,
                                   latt: map_latt,
                                   long: map_long,
+                                  name: name,
                                 },
                               }}
                             >
