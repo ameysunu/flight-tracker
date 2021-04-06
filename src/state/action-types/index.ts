@@ -33,3 +33,9 @@ export enum GetWeather{
   GET_WEATHER_SUCCESS = "get_weather_success",
   GET_WEATHER_ERROR = "get_weather_error",
 }
+
+export enum GetAirportIATA {
+  GET_AIRPORT_IATA = "get_airport_iata",
+  GET_AIRPORT_IATA_SUCCESS = "get_airport_iata_success",
+  GET_AIRPORT_IATA_ERROR = "get_airport_iata_error",
+}

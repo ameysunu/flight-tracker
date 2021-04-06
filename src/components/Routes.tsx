@@ -20,7 +20,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RootState } from "../state";
-import { getRoutes, getWeatherDetails } from "../state/action-creators";
+import {
+  getRoutes,
+  getWeatherDetails,
+  getAirportIATA,
+} from "../state/action-creators";
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
@@ -91,6 +95,10 @@ const Routes: React.FC = () => {
 
   const weatherTap = () => {
     dispatch(getWeatherDetails(arr_icao));
+  };
+
+  const mapTap = () => {
+    dispatch(getAirportIATA(arr_iata));
   };
 
   const popover = (
@@ -444,6 +452,16 @@ const Routes: React.FC = () => {
                                 </tr>
                               </tbody>
                             </Table>
+                            <Link
+                              to={{
+                                pathname: "/map",
+                              }}
+                            >
+                              <Button variant="outline-light" onClick={mapTap}>
+                                {" "}
+                                Airport Map{" "}
+                              </Button>
+                            </Link>
                           </Modal.Body>
                           <Modal.Footer>
                             <Button variant="primary" onClick={handleClose}>

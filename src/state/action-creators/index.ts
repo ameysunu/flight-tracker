@@ -7,6 +7,7 @@ import {
   GetAirportData,
   GetRoutes,
   GetWeather,
+  GetAirportIATA
 } from "../action-types";
 import {
   Action,
@@ -15,6 +16,7 @@ import {
   GetAirportAction,
   GetRoutesAction,
   GetWeatherAction,
+  GetAirportIATAAction
 } from "../actions";
 
 export const getAirport = (term: string) => {
@@ -447,6 +449,55 @@ export const getWeatherDetails = (icao: string) => {
     } catch (err) {
       dispatch({
         type: GetWeather.GET_WEATHER_ERROR,
+        payload: err.message,
+      });
+
+      console.log(err);
+    }
+  };
+};
+
+export const getAirportIATA = (code: string) => {
+  return async (dispatch: Dispatch<GetAirportIATAAction>) => {
+    dispatch({
+      type: GetAirportIATA.GET_AIRPORT_IATA,
+    });
+
+    try {
+      const { data } = await axios.get(
+        `http://api.aviationstack.com/v1/airports`,
+        {
+          params: {
+            access_key: process.env.REACT_APP_AVSTACK_KEY,
+            iata_code: code,
+          },
+        }
+      );
+
+      const iata = data.data.map((result: any) => {
+        return result.iata;
+      });
+
+      const latt = data.data.map((result: any) => {
+        return result.latitude;
+      });
+
+      const long = data.data.map((result: any) => {
+        return result.longitude;
+      })
+
+
+      dispatch({
+        type: GetAirportIATA.GET_AIRPORT_IATA_SUCCESS,
+        payload: {
+          iata: iata,
+          lattitude: latt,
+          longtitude: long
+        },
+      });
+    } catch (err) {
+      dispatch({
+        type: GetAirportIATA.GET_AIRPORT_IATA_ERROR,
         payload: err.message,
       });
 
