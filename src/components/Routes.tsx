@@ -44,6 +44,7 @@ const Routes: React.FC = () => {
   const dispatch = useDispatch();
   const { done } = selector.routerepo;
   const { val } = selector.weatherrepo;
+  const { data } = selector.airportiatarepo;
   const { load, error } = useTypedSelector((state: any) => state.routerepo);
   const { loading, err } = useTypedSelector((state: any) => state.weatherrepo);
 
@@ -74,6 +75,9 @@ const Routes: React.FC = () => {
   const visibility = val?.visibility?.[0];
   const windspeed_kts = val?.windspeed_kts?.[0];
   const clouds = val?.clouds?.[0];
+  const map_iata = data?.iata?.[0];
+  const map_latt = data?.lattitude?.[0];
+  const map_long = data?.longtitude?.[0];
 
   const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=000000&iata=${flightiata}`;
   const codeImage = `https://daisycon.io/images/airline/?width=300&height=150&color=000000&iata=${codeairlineiata}`;
@@ -95,9 +99,6 @@ const Routes: React.FC = () => {
 
   const weatherTap = () => {
     dispatch(getWeatherDetails(arr_icao));
-  };
-
-  const mapTap = () => {
     dispatch(getAirportIATA(arr_iata));
   };
 
@@ -455,9 +456,14 @@ const Routes: React.FC = () => {
                             <Link
                               to={{
                                 pathname: "/map",
+                                state: {
+                                  iata: map_iata,
+                                  latt: map_latt,
+                                  long: map_long,
+                                },
                               }}
                             >
-                              <Button variant="outline-light" onClick={mapTap}>
+                              <Button variant="outline-light">
                                 {" "}
                                 Airport Map{" "}
                               </Button>
