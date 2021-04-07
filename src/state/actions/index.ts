@@ -3,6 +3,7 @@ import {
   AirlineActionType,
   AirportActionType,
   GetAirportData,
+  GetAirportIATA,
   GetRoutes,
   GetWeather,
 } from "../action-types";
@@ -113,7 +114,7 @@ interface GetRouteSuccessData {
     codeairline: string;
     codeairlineiata: string;
     codeflight: string;
-    
+
     arr_icao: string;
   };
 }
@@ -141,6 +142,24 @@ interface GetWeatherSuccessData {
 
 interface GetWeatherErrorData {
   type: GetWeather.GET_WEATHER_ERROR;
+  payload: string;
+}
+
+interface GetAirportIATAData {
+  type: GetAirportIATA.GET_AIRPORT_IATA;
+}
+
+interface GetAirportIATASuccessData {
+  type: GetAirportIATA.GET_AIRPORT_IATA_SUCCESS;
+  payload: {
+    iata: string;
+    lattitude: string;
+    longtitude: string;
+  };
+}
+
+interface GetAirportIATAErrorData {
+  type: GetAirportIATA.GET_AIRPORT_IATA_ERROR;
   payload: string;
 }
 
@@ -173,3 +192,8 @@ export type GetWeatherAction =
   | GetWeatherData
   | GetWeatherSuccessData
   | GetWeatherErrorData;
+
+export type GetAirportIATAAction =
+  | GetAirportIATAData
+  | GetAirportIATASuccessData
+  | GetAirportIATAErrorData;

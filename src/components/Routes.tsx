@@ -20,7 +20,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RootState } from "../state";
-import { getRoutes, getWeatherDetails } from "../state/action-creators";
+import {
+  getRoutes,
+  getWeatherDetails,
+  getAirportIATA,
+} from "../state/action-creators";
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
@@ -40,6 +44,7 @@ const Routes: React.FC = () => {
   const dispatch = useDispatch();
   const { done } = selector.routerepo;
   const { val } = selector.weatherrepo;
+  const { data } = selector.airportiatarepo;
   const { load, error } = useTypedSelector((state: any) => state.routerepo);
   const { loading, err } = useTypedSelector((state: any) => state.weatherrepo);
 
@@ -70,6 +75,9 @@ const Routes: React.FC = () => {
   const visibility = val?.visibility?.[0];
   const windspeed_kts = val?.windspeed_kts?.[0];
   const clouds = val?.clouds?.[0];
+  const map_iata = data?.iata?.[0];
+  const map_latt = data?.lattitude?.[0];
+  const map_long = data?.longtitude?.[0];
 
   const flightImage = `https://daisycon.io/images/airline/?width=300&height=150&color=000000&iata=${flightiata}`;
   const codeImage = `https://daisycon.io/images/airline/?width=300&height=150&color=000000&iata=${codeairlineiata}`;
@@ -91,6 +99,7 @@ const Routes: React.FC = () => {
 
   const weatherTap = () => {
     dispatch(getWeatherDetails(arr_icao));
+    dispatch(getAirportIATA(arr_iata));
   };
 
   const popover = (
@@ -212,14 +221,6 @@ const Routes: React.FC = () => {
           }}
         >
           <LinearProgress />
-          {/* <Spinner
-            style={{ alignSelf: "center" }}
-            animation="grow"
-            role="status"
-            variant="primary"
-          >
-            <span className="sr-only">Loading...</span>
-          </Spinner> */}
         </div>
       )}
       {error && (
@@ -444,6 +445,22 @@ const Routes: React.FC = () => {
                                 </tr>
                               </tbody>
                             </Table>
+                            <Link
+                              to={{
+                                pathname: "/map",
+                                state: {
+                                  iata: map_iata,
+                                  latt: map_latt,
+                                  long: map_long,
+                                  name: name,
+                                },
+                              }}
+                            >
+                              <Button variant="outline-light">
+                                {" "}
+                                Airport Map{" "}
+                              </Button>
+                            </Link>
                           </Modal.Body>
                           <Modal.Footer>
                             <Button variant="primary" onClick={handleClose}>
