@@ -26,7 +26,7 @@ export const getAirport = (term: string) => {
     });
 
     try {
-      const { data } = await axios.get(`http://airlabs.co/api/v7/airlines`, {
+      const { data } = await axios.get(`https://airlabs.co/api/v9/airlines`, {
         params: {
           api_key: process.env.REACT_APP_AVLABS_KEY,
           name: term,
@@ -124,19 +124,20 @@ export const getAirportDetails = (airport_name: string) => {
 
     try {
       const { data } = await axios.get(
-        `http://airlabs.co/api/v6/autocomplete?api_key=15c6d234-e87f-4224-a1e5-07d5161d4295`,
+        `https://airlabs.co/api/v9/airports`,
         {
           params: {
-            query: airport_name,
+            api_key: process.env.REACT_APP_AVLABS_KEY,
+            iata_code: airport_name,
           },
         }
       );
 
-      const code = data.response.airports.map((result: any) => {
-        return result.code;
+      const code = data.response.map((result: any) => {
+        return result.iata_code;
       });
 
-      const name = data.response.airports.map((result: any) => {
+      const name = data.response.map((result: any) => {
         return result.name;
       });
 
